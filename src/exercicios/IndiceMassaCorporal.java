@@ -1,5 +1,5 @@
 /**
- * Exercício 1
+ * Exercicio 1
  */
 package exercicios;
 
@@ -10,10 +10,10 @@ import java.util.Scanner;
 
 /**
  * 
- * O Índice de Massa Corporal é uma medida utilizada para medir a obesidade adotada pela 
- * Organização Mundial de Saúde (OMS). É o padrão internacional para avaliar o grau de obesidade
+ * O Indice de Massa Corporal eh uma medida utilizada para medir a obesidade adotada pela 
+ * Organizacao Mundial de Saude (OMS). Eh o padrao internacional para avaliar o grau de obesidade
  * 
- * IMC = Peso/altura²  //Peso em Kg dividido pelo quadrado do valor da altura em metros
+ * IMC = Peso/(altura*altura)  //Peso em Kg dividido pelo quadrado do valor da altura em metros
  * 
  * @author RobertoOliveira
  *
