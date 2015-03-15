@@ -2,3 +2,6 @@
 .buildpath
 .project
 .classpath
+build.xml
+manifest.mf
+nbproject/
