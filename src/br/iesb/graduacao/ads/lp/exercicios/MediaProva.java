@@ -28,6 +28,8 @@ public class MediaProva {
         System.out.println("Informe a nota P2: ");
         p2 = entrada.nextFloat();
         
+        entrada.close();
+        
         M = ( p1 + p2 ) / 2;
     	System.out.println("Média = "+M);
         if(M >= 6.0){

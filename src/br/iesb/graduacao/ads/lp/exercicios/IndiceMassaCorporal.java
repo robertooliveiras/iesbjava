@@ -34,6 +34,8 @@ public class IndiceMassaCorporal {
         System.out.println("Informe o peso (kg): ");
         peso = entrada.nextFloat();
         
+        entrada.close();
+        
         IMC = peso / (altura * altura);
         System.out.println("O IMC de uma pessoa que pesa "+peso+" kg e tem "+altura+"m de altura é : " + IMC);
 	}
