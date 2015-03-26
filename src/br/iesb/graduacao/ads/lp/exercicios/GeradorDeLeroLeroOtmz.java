@@ -1,7 +1,7 @@
 /**
  * Informando qual pacote abarcará o programa GeradorDeLeroLero
  */
-package exercicios;
+package br.iesb.graduacao.ads.lp.exercicios;
 
 /**
  * Criando a Classe GeradorDeLeroLero com vizibilidade para todas as outras classes (public)

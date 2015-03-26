@@ -1,7 +1,7 @@
 /**
  * Exercicio 1
  */
-package exercicios;
+package br.iesb.graduacao.ads.lp.exercicios;
 
 /**
  * Esse pacote permite escanear entradas de dados

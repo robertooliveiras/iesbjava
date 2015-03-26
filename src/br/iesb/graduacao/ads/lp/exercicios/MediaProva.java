@@ -2,7 +2,7 @@
  * Implementem um programa em Java que realiza o cálculo da média e exiba a mensagem "Aprovado" ou "Reprovado", conforme fluxograma abaixo:
  * 
  */
-package exercicios;
+package br.iesb.graduacao.ads.lp.exercicios;
 /**
  * Esse pacote permite escanear entradas de dados
  */

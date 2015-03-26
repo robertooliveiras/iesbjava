@@ -1,7 +1,7 @@
 /**
  * Informando qual pacote abarcará o programa HelloWorld
  */
-package meuprimeiroprograma;
+package br.iesb.graduacao.ads.lp.meuprimeiroprograma;
 
 /**
  * Criando a Classe HelloWorld com vizibilidade para todas as outras classes (public)

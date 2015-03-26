@@ -1,7 +1,7 @@
 /**
  * 
  */
-package helloworldapp;
+package br.iesb.graduacao.ads.lp.helloworldapp;
 
 /**
  * @author RobertoOliveira

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package exercicios;
+package br.iesb.graduacao.ads.lp.exercicios;
 
 /**
  * @author RobertoOliveira

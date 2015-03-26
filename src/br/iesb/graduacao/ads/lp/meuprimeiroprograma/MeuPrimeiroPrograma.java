@@ -4,7 +4,7 @@
  * O pacote é algo criado pelo próprio desenvolvedor, serve para organizar o código e funções
  * @author RobertoOliveira
  */
-package meuprimeiroprograma;
+package br.iesb.graduacao.ads.lp.meuprimeiroprograma;
 
 /**
  * Agora é só criar sua classe

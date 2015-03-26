@@ -1,7 +1,7 @@
 /**
  * Primeiro tem que escrever os pacotes a serem utilizados
  */
-package helloworldapp;
+package br.iesb.graduacao.ads.lp.helloworldapp;
 
 /**
  * Agora é sé criar a classe

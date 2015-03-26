@@ -1,7 +1,7 @@
 /**
  * Informando qual pacote abarcará o programa TiposECaracteristicas
  */
-package meuprimeiroprograma;
+package br.iesb.graduacao.ads.lp.meuprimeiroprograma;
 
 /**
  * Criando uma classe para brincar com TIPOS PRIMITIVOS E CARACTERÍSTICAS ESPECÍFICAS DO JAVA
