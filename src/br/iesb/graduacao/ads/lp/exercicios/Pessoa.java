@@ -5,7 +5,9 @@ public abstract class Pessoa implements IEmpregado {
 	public String nome;
 	public int idade;
 	
-	public Pessoa(String matricula) {
-		this.matricula = matricula;
+	public Pessoa(String m, String n, int i) {
+		this.matricula = m;
+		this.nome = n;
+		this.idade = i;
 	}
 }

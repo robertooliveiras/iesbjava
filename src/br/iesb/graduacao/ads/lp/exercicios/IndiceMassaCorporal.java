@@ -24,9 +24,11 @@ public class IndiceMassaCorporal {
 	
 	private TabelaIMC tIMC;
 	
-	enum TabelaIMC { MAP(1,"Muito Abaixo do Peso","[Frase preocupante]")
+	enum TabelaIMC { MAP(1,"Muito Abaixo do Peso","Cuidado, você está muito abaixo do peso!"
+			+ "\né preciso se alimentar bem para ser saudável.")
 				, AbP(2,"Abaixo do Peso","[Frase apreensiva]")
-				, PNo(3,"Peso Normal","[frase contente]")
+				, PNo(3,"Peso Normal","Muito bom!! você está de parabéns pois seu peso está compatível com sua altura!"
+						+ "\ncontinue assim!")
 				, AcP(4,"Acima do Peso","[Frase apreensiva]")
 				, OI(5,"Obesidade I","[Frase muito apreensiva]")
 				, OII(6,"Obesidade II","[Frase preocupante]")
@@ -102,7 +104,7 @@ public class IndiceMassaCorporal {
         
         System.out.println("Pesando "+peso+" kg com "+altura+"m de altura, O seu IMC é igual a " + IMC);
         System.out.println("O seu estado físico é "+myIMC.tIMC.getDescription());        
-        System.out.println(myIMC.tIMC.getFrase());
+        System.out.println("\n\n"+myIMC.tIMC.getFrase());
 
         System.out.println("\n\nVeja abaixo os níveis de estado físico registrados na br.iesb.java.Ex1");
 
