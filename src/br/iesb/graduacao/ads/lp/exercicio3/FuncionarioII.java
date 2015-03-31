@@ -1,4 +1,4 @@
-package br.iesb.graduacao.ads.lp.exercicios;
+package br.iesb.graduacao.ads.lp.exercicio3;
 
 public class FuncionarioII extends FuncionarioI {
 	

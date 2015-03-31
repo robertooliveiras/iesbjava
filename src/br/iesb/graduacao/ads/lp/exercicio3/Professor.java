@@ -1,4 +1,4 @@
-package br.iesb.graduacao.ads.lp.exercicios;
+package br.iesb.graduacao.ads.lp.exercicio3;
 
 public class Professor extends Pessoa {
 	
@@ -11,7 +11,6 @@ public class Professor extends Pessoa {
 		this.titulacao = t;
 	}
 	
-	@Override
 	public double calculaSalario() {
 		double vh = 1;
 		switch(this.titulacao){
@@ -24,22 +23,24 @@ public class Professor extends Pessoa {
 		case 2:
 			vh = 130;
 			break;
-		default:
-			break;
 		}
 		
 		double s = this.cargaHoraria * 4 * vh;
 		return s;
 	}
 
-	@Override
 	public void imprimirDados() {
 		System.out.println("Matricula: " + this.matricula
 				+ " | Nome: " + this.nome
 				+ " | Idade: " + this.idade
-				+ " | Salário: R$ "+ this.calculaSalario());
-		
-		
+				+ " | Salário: R$ "+ this.calculaSalario());		
+	}
+
+	public String getDados() {
+		return "Matricula: " + this.matricula
+				+ " | Nome: " + this.nome
+				+ " | Idade: " + this.idade
+				+ " | Salário: R$ "+ this.calculaSalario();		
 	}
 	
 }

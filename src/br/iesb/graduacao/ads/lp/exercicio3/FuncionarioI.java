@@ -1,4 +1,4 @@
-package br.iesb.graduacao.ads.lp.exercicios;
+package br.iesb.graduacao.ads.lp.exercicio3;
 
 public class FuncionarioI extends Pessoa {
 	
@@ -11,18 +11,24 @@ public class FuncionarioI extends Pessoa {
 		this.gratificacao = g;
 	}
 	
-	@Override
 	public double calculaSalario() {
 		double s = this.salarioBase + this.gratificacao;
 		return s;
 	}
 
-	@Override
 	public void imprimirDados() {
 		System.out.println("Matricula: " + this.matricula
 				+ " | Nome: " + this.nome
 				+ " | Idade: " + this.idade
 				+ " | Salário: R$ "+ this.calculaSalario());
+		
+	}
+
+	public String getDados() {
+		return "Matricula: " + this.matricula
+				+ " | Nome: " + this.nome
+				+ " | Idade: " + this.idade
+				+ " | Salário: R$ "+ this.calculaSalario();
 		
 	}
 

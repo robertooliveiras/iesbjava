@@ -1,4 +1,4 @@
-package br.iesb.graduacao.ads.lp.exercicios;
+package br.iesb.graduacao.ads.lp.exercicio3;
 
 public class Estagiario extends Pessoa {
 	
@@ -10,7 +10,6 @@ public class Estagiario extends Pessoa {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public double calculaSalario() {
 		double v = 35;
 		double s = v * this.cargaHorariaSemanal;
@@ -21,13 +20,21 @@ public class Estagiario extends Pessoa {
 		this.imprimirDados();
 	};
 
-	@Override
 	public void imprimirDados() {
 		System.out.println("Matricula: " + this.matricula
 				+ " | Nome: " + this.nome
 				+ " | Idade: " + this.idade
 				+ " | Carga Horária: "+ this.cargaHorariaSemanal+"h"
 				+ " | Salário: R$ "+ this.calculaSalario());
+		
+	}
+
+	public String getDados() {
+		return "Matricula: " + this.matricula
+				+ " | Nome: " + this.nome
+				+ " | Idade: " + this.idade
+				+ " | Carga Horária: "+ this.cargaHorariaSemanal+"h"
+				+ " | Salário: R$ "+ this.calculaSalario();
 		
 	}
 
