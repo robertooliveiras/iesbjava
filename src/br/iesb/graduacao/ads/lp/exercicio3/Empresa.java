@@ -42,16 +42,16 @@ public class Empresa {
 		Scanner entrada = new Scanner(System.in);
 		
 		do {
-			System.out.println("Deseja inserir um novo empregado (s ou n)?");
+			System.out.println("Deseja inserir um novo empregado (s || n)?");
 			opcao = entrada.next();
 			
 			if(opcao.equalsIgnoreCase("S")){
-				System.out.println("Digite o tipo de empregado?");
+				System.out.println("Digite o tipo de empregado (E || F1 || F2 || P):");
 				tpEmpregado = entrada.next();
 				switch (tpEmpregado.toString()) { //needs JRE7
 				case "e":
 				case "E":
-					System.out.println("Digite Matricula, Nome, idade e carga horária do Estagiário:");
+					System.out.println("Informações do Estagiário:");
 					System.out.println("Matricula:");
 					matricula = entrada.next();
 					System.out.println("Nome:");
@@ -68,7 +68,7 @@ public class Empresa {
 				case "F1":
 				case "fi":
 				case "Fi":
-					System.out.println("Digite Matricula, Nome, idade, salario base e gratificação do FuncionárioI:");
+					System.out.println("Informações do FuncionárioI:");
 					System.out.println("Matricula:");
 					matricula = entrada.next();
 					System.out.println("Nome:");
@@ -90,7 +90,7 @@ public class Empresa {
 				case "FII":
 				case "Fii":
 				case "fII":
-					System.out.println("Digite Matricula, Nome, idade, salario base, gratificação e tempo de serviço do FuncionárioII:");
+					System.out.println("Informações do FuncionárioII:");
 					System.out.println("Matricula:");
 					matricula = entrada.next();
 					System.out.println("Nome:");
@@ -110,7 +110,7 @@ public class Empresa {
 					break;
 				case "p":
 				case "P":
-					System.out.println("Digite Matricula, Nome, idade e carga horária do Professor:");
+					System.out.println("Informações do Professor:");
 					System.out.println("Matricula:");
 					matricula = entrada.next();
 					System.out.println("Nome:");
@@ -128,7 +128,7 @@ public class Empresa {
 					break;
 
 				default:
-					System.out.println("Opção inválida, digite E || F1 || F2 || P");
+					System.out.println("Opção inválida, comece novamente");
 					break;
 				}
 			}else if(opcao.equalsIgnoreCase("N")){
@@ -141,8 +141,12 @@ public class Empresa {
 		} while (continuar);
 		
 		entrada.close();
-		System.out.println("Veja os dados colhidos:");
-		System.out.println(saida);
+		if(saida != ""){
+			System.out.println("Veja os dados colhidos:");		
+			System.out.println(saida);
+		}else{
+			System.out.println("Nenhuma informação cadastrada");
+		}
 
 	}
 
