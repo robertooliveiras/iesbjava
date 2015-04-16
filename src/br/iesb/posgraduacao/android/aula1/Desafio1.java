@@ -1,35 +1,32 @@
 package br.iesb.posgraduacao.android.aula1;
 
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Vector;
-
 public class Desafio1 {
 
 	public static void main(String[] args) {
 		int[][] matriz = new int[3][3];
-		String[] numbers = new String[8];
-		int tmp;
-		Random rnd = new Random(8);
-		for (int i = 0; i <= numbers.length; i++) {
-			do{
-				tmp = rnd.nextInt(8);
-				System.out.println(tmp);
-				if(!Arrays.asList(numbers).contains(tmp+"")){
-					numbers[i] = tmp+"";
+		int[] controla = new int[8];
+		boolean popula = true;
+		int j = 1;
+		while(j < 4){
+			int x = (int) (Math.random() * 8);
+			if(x==0)x=1;
+			System.out.println("x = "+x);
+			for (int i = 0; i < j; i++) {
+				System.out.println("i = "+controla[i]);
+				if(controla[i] == x){
+					popula = false;
 				}
-			}while(!Arrays.asList(numbers).contains(tmp+""));
+			}
+			if(popula){
+				int n = j-1;
+				controla[n] = x;
+				j++;
+			}
 		}
-		
-//		for (int i = 0; i < numbers.length; i++) {
-//			System.out.println(numbers[i]);
-//		}
+
 		
 		
 		
-		if(!Arrays.asList(numbers).contains("1")){
-			System.out.println("tem");
-		}
 		matriz[0][0] = 1;
 		matriz[0][1] = 2;
 		matriz[0][2] = 3;
