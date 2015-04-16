@@ -1,8 +1,13 @@
 package br.iesb.posgraduacao.android.aula1;
-
+/**
+ * 
+ * @author RobertoOliveira
+ * ordem de complexidade
+ */
 public class Desafio1 {
 
 	public static void main(String[] args) {
+		
 		int[][] matriz = new int[3][3];
 		int[] controla = new int[8];
 		boolean popula = true;
