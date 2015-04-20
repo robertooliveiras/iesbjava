@@ -72,17 +72,27 @@ public class Desafio1 {
 		
 		System.out.println("\n");
 		
-		int b = 0; //branco
+		int branco = 0; //branco
 		int tb = 1; //troca por branco
-		int f = 8; //fixo
+		int flexa = 1; //fixo
 		int tf; //troca por fixo
+		boolean moveBranco;
+		int linhaAlvoBranco;
+		int colunaAlvoBranco;
+		int linhaBranco;
+		int colunaBranco;
 		
-		for (int k = 0; k < matriz.length; k++) {
-			for (int l = 0; l < matriz.length; l++) {
-				if(matriz[k][l] == b){
-					System.out.println("A posição do 0 é L"+k+"C"+l);
-				}else if(matriz[k][l] == f){
-					System.out.println("A posição do "+f+" é L"+k+"C"+l);
+		for (int linha = 0; linha < matriz.length; linha++) {
+			for (int coluna = 0; coluna < matriz.length; coluna++) {
+				if(matriz[linha][coluna] == branco){
+					System.out.println("A posição do 0 é L"+linha+"C"+coluna);
+					if(linha > 0){
+						matriz[linha][coluna] = matriz[linha-1][coluna];
+						matriz[linha-1][coluna] = branco;
+						System.out.println("branco tem que ir para a posição L"+(linha-1)+"C"+coluna);
+					}
+				}else if(matriz[linha][coluna] == flexa){
+					System.out.println("A posição do "+flexa+" é L"+linha+"C"+coluna);					
 				}
 			}
 			System.out.println();
