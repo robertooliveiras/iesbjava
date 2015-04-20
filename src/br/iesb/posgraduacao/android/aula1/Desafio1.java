@@ -8,6 +8,7 @@ public class Desafio1 {
 
 	public static void main(String[] args) {
 		
+		Desafio1 desafio = new Desafio1();
 		int[][] matrizRef = new int[3][3];
 		int[][] matriz = new int[3][3];
 		int[] controla = new int[8];
@@ -63,39 +64,93 @@ public class Desafio1 {
 		matrizRef[2][1] = 8; //controla[7];
 		matrizRef[2][2] = 0;
 		
-		for (int k = 0; k < matriz.length; k++) {
-			for (int l = 0; l < matriz[k].length; l++) {
-				System.out.print(matriz[k][l]);				
+//		while(!desafio.comparaMatriz(matriz,matrizRef)){
+//		}
+
+		int branco = 0; //branco
+		int tb = 1; //troca por branco
+		int flexa = 1; //fixo
+		int tf; //troca por fixo
+		boolean moveBranco;
+		int[] posicaoAlvo = new int[2];
+		int[] posicaoBranco = new int[2];
+		int[] posicaoFlexa = new int[2];
+		int[] proximaPosicaoBranco = new int[2];
+		
+		for (int linha = 0; linha < matriz.length; linha++) {
+			for (int coluna = 0; coluna < matriz.length; coluna++) {
+				System.out.print(matriz[linha][coluna]);		
+				if(matriz[linha][coluna] == branco){
+					posicaoBranco[0]= linha;
+					posicaoBranco[1]= coluna;
+				}else if(matriz[linha][coluna] == flexa){
+					posicaoFlexa[0]= linha;
+					posicaoFlexa[1]= coluna;
+				}
 			}
 			System.out.println();
 		}
 		
 		System.out.println("\n");
 		
-		int branco = 0; //branco
-		int tb = 1; //troca por branco
-		int flexa = 1; //fixo
-		int tf; //troca por fixo
-		boolean moveBranco;
-		int linhaAlvoBranco;
-		int colunaAlvoBranco;
-		int linhaBranco;
-		int colunaBranco;
+		System.out.println("A posição do 0 (branco) é L"+posicaoBranco[0]+"C"+posicaoBranco[1]);
+		System.out.println("A posição do "+flexa+" (flexa) é L"+posicaoFlexa[0]+"C"+posicaoFlexa[1]);
 		
+		if(posicaoBranco[0] == posicaoFlexa[0]){
+			System.out.println("branco e flexa na mesma linha");
+			if(posicaoBranco[1] < posicaoFlexa[1]){
+				System.out.println("branco em coluna à esquerda");
+			}else if(posicaoBranco[1] > posicaoFlexa[1]){
+				System.out.println("branco em coluna à direita");
+				if(posicaoBranco[0] == 0){
+					proximaPosicaoBranco[0] = posicaoBranco[0]+1;
+					proximaPosicaoBranco[1] = posicaoBranco[1];
+				}else{
+					proximaPosicaoBranco[0] = posicaoBranco[0]-1;
+					proximaPosicaoBranco[1] = posicaoBranco[1];
+				}
+			}
+		}
+		System.out.print("Branco tem que ir para L"+proximaPosicaoBranco[0]+"C"+proximaPosicaoBranco[1]);
+		System.out.println(": "+matriz[proximaPosicaoBranco[0]][proximaPosicaoBranco[1]]);
+		matriz = desafio.trocaPosicaoBranco(posicaoBranco[0], posicaoBranco[1], proximaPosicaoBranco[0], proximaPosicaoBranco[1], matriz);
+		System.out.println("\n\n");
 		for (int linha = 0; linha < matriz.length; linha++) {
 			for (int coluna = 0; coluna < matriz.length; coluna++) {
+				System.out.print(matriz[linha][coluna]);		
 				if(matriz[linha][coluna] == branco){
-					System.out.println("A posição do 0 é L"+linha+"C"+coluna);
-					if(linha > 0){
-						matriz[linha][coluna] = matriz[linha-1][coluna];
-						matriz[linha-1][coluna] = branco;
-						System.out.println("branco tem que ir para a posição L"+(linha-1)+"C"+coluna);
-					}
+					posicaoBranco[0]= linha;
+					posicaoBranco[1]= coluna;
 				}else if(matriz[linha][coluna] == flexa){
-					System.out.println("A posição do "+flexa+" é L"+linha+"C"+coluna);					
+					posicaoFlexa[0]= linha;
+					posicaoFlexa[1]= coluna;
 				}
 			}
 			System.out.println();
 		}
+		
+	}
+	
+	public boolean comparaMatriz(int[][] m1, int[][]m2){
+		if(m1.length != m2.length){
+			return false;
+		}
+		for (int i = 0; i < m1.length; i++) {
+			if(m1[i].length != m2[i].length){
+				return false;
+			}
+			for (int j = 0; j < m1[i].length; j++) {
+				if(m1[i][j] != m2[i][j]){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public int[][] trocaPosicaoBranco(int lb, int cb, int plb, int pcb, int[][] matriz){
+		matriz[lb][cb] = matriz[plb][pcb];
+		matriz[plb][pcb] = 0;
+		return matriz;
 	}
 }
