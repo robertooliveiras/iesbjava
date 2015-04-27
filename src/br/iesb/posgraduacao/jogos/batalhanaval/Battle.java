@@ -65,13 +65,14 @@ public class Battle {
 	
 	public void place(){
 		System.out.println();
-		System.out.println("Distribua sua frota no tabuleiro seguindo as instruções abaixo:");
-		System.out.println("Frota:\n   1: Submarino (duas células)\n   2: Destroyer (três células)\n   3: Navio de Guerra (quatro células)");
-		System.out.println("Célula:\n   Linha e Coluna. ex: C2");
-		System.out.println("Direção:\n   H: Horizontal\n   V: Vertical");
-		System.out.println("\nDigite na sequência: Frota, espaço, Célula, espaço, Direção. ex: 1 A1 H");
-		System.out.println("Pressione 'Enter' a cada escolha");
-		System.out.println("\nDigite 'I' para Iniciar o jogo.");
+		System.out.println("Para distribuir sua frota no tabuleiro, digite os comandos na seguinte sequencia:"
+				+ "\nPrimeiro insira o número equivalente ao navio que você quer utilizar e tecle espaço;"
+				+ "\n   1: Submarino (duas células)\n   2: Destroyer (três células)\n   3: Navio de Guerra (quatro células)"
+				+ "\nEm seguida insira a Célula onde será localizada a ponta do o navio (ex: C2) e tecle espaço;"
+				+ "\nPor último, informe a orientação do navio: Utilize H (Horizontal) ou V (Vertical) e tecle Enter."
+				+ "\nex.: 1 B2 H"
+				+ "\n\nO tiro Errado será mostrado como ~O~; o tiro certo será mostrado como ~X~.");
+		System.out.println("\nApós posicionar a frota, digite 'I' para Iniciar o jogo.");
 		
 		String input = "";
 		boolean start = false;
@@ -331,7 +332,7 @@ public boolean AIplactblInimigo(char layout, Navio current, String locale){
 				message = "Em cheio!!!";
 			}
 			else{
-				himi = 'o';
+				himi = 'O';
 				message = "Errou!";
 			}
 			tblInimigo[((int)move.charAt(0)-65)][((int)move.charAt(1)-49)].piece = "~"+himi+"~|";
@@ -346,7 +347,7 @@ public boolean AIplactblInimigo(char layout, Navio current, String locale){
 				AI.count++;
 			}
 			else{
-				himi = 'o';
+				himi = 'O';
 				message = "Errou!";
 				AI.himi2 = AI.himi;
 				AI.himi = 'M';
