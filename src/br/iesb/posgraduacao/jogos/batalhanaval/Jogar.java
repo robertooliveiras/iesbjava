@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Jogar {
 
 	public static void main(String[] args) {String again;
-		Battle jogo = new Battle(6);
+		CampoBatalha jogo = new CampoBatalha(6);
 		jogo.entrada = new Scanner(System.in);
 		jogo.play();
 		

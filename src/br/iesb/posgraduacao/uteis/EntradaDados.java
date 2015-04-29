@@ -10,6 +10,7 @@ public class EntradaDados {
 	private static Tabuleiro[][] matriz;
 	private int tamanho = 6;
 	private String[] navioValido = {"1","2","3"};
+	private int[][] tamanhoNavio = {{1,2},{2,3},{3,4}};
 	private List<String> linhaValida = new ArrayList<String>();
 	private List<String> colunaValida = new ArrayList<String>();
 	private String[] alfabeto = {"A","B","C","D","E","F","G","H","I","J"};
@@ -85,6 +86,7 @@ public class EntradaDados {
 		boolean validaLinha = false;
 		boolean validaColuna = false;
 		boolean validaOrientacao = false;
+		boolean validaPosicao = false;
 		
 		//valida tipo de navio
 		for (int i = 0; i < navioValido.length; i++) {
@@ -94,10 +96,14 @@ public class EntradaDados {
 			}
 		}
 		
+		System.out.println((int)a[0]);
 		//valida linha informada
 		for (int i = 0; i < linhaValida.size(); i++) {
 			if(linhaValida.get(i).charAt(0)==a[2]){
 				validaLinha = true;
+//				if(i <= (tamanho-1)-((int)a[0]+1)){
+//					validaPosicao = true;
+//				}
 				break;
 			}
 		}
@@ -111,15 +117,29 @@ public class EntradaDados {
 		}
 		
 		//valida orientação informada
-		for (int i = 0; i < orientacaoValida.length; i++) {
-			if(orientacaoValida[i].charAt(0) == a[b2+1]){
-				validaOrientacao = true;
-				break;
-			}
+//		for (int i = 0; i < orientacaoValida.length; i++) {
+//			if(orientacaoValida[i].charAt(0) == a[b2+1]){
+//				validaOrientacao = true;
+//				break;
+//			}
+//		}
+		if(a[b2+1] == 'V' || a[b2+1] == 'H'){
+			validaOrientacao = true;
 		}
+
+		
+		
+		//valida posicao do navio quanto ao tamanho do tabuleiro
+		//só pode ser vertical se a linha for maior ou igual ao tamanho do navio e se não houver navio ocupando o espaço
+//		
+		System.out.println(linhaValida.get(2));
+//		if(a[b2+1] == 'V' && linhaValida.indexOf(linha) <= 1){
+//			validaPosicao = true;
+//		}
+		//só pode ser horizontal se a coluna cor menor ou igual ao tamanho da matriz subtraído do tamanho do navio e se não houver navio ocupando o espaço
 		
 		//valida todas as variáveis de verificação
-		if(validaNavio && validaLinha && validaColuna && validaOrientacao){
+		if(validaNavio && validaLinha && validaColuna && validaOrientacao && validaPosicao){
 			valida = true;
 		}
 		return valida;

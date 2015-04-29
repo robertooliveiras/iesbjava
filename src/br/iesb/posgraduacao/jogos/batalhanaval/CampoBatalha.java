@@ -3,7 +3,7 @@ package br.iesb.posgraduacao.jogos.batalhanaval;
 import java.util.Scanner;
 import java.util.Random;
 
-public class Battle {
+public class CampoBatalha {
 
 	protected Scanner entrada;
 	private Tabuleiro[][] tblJogador;
@@ -22,7 +22,7 @@ public class Battle {
 	private Navio ebattleship = new Navio(3);
 	private JogadaComputador AI = new JogadaComputador();
 
-	public Battle( int t ) {
+	public CampoBatalha( int t ) {
 		tamanho = t;
 		Tabuleiro tj = new Tabuleiro();
 		tblJogador = tj.criaTabuleiro(t);
@@ -33,7 +33,7 @@ public class Battle {
 	
 	public void play(){
 		printBoard();
-		place();
+		distribuiFrota();
 		AIplace();
 		System.out.println("Jogadas no formato Linha Coluna: 'C4'");
 		while(!win)
@@ -63,7 +63,7 @@ public class Battle {
 		}
 	}
 	
-	public void place(){
+	public void distribuiFrota(){
 		System.out.println();
 		System.out.println("Para distribuir sua frota no tabuleiro, digite os comandos na seguinte sequencia:"
 				+ "\nPrimeiro insira o número equivalente ao navio que você quer utilizar e tecle espaço;"
