@@ -13,7 +13,7 @@ public class Agua {
 
 	public void setAtingido(boolean atingido) {
 		this.atingido = atingido;
-		this.forma = "~0~|";
+		this.setForma("~0~|");
 	}
 
 	public boolean isVisivel() {
@@ -35,4 +35,19 @@ public class Agua {
 		this.linha = posicao[0];
 		this.coluna = posicao[1];
 	}
+
+	/**
+	 * @return the forma
+	 */
+	public String getForma() {
+		return forma;
+	}
+
+	/**
+	 * @param forma the forma to set
+	 */
+	public void setForma(String forma) {
+		this.forma = forma;
+	}
+
 }
