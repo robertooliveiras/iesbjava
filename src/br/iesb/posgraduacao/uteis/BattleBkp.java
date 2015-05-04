@@ -1,4 +1,4 @@
-package br.iesb.posgraduacao.jogos.batalhanaval;
+package br.iesb.posgraduacao.uteis;
 
 import java.util.Scanner;
 import java.util.Random;
