@@ -4,6 +4,8 @@
 package br.iesb.posgraduacao.jogos.batalha_naval;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /*** 
  * @author RobertoOliveira
@@ -22,36 +24,44 @@ public class CampoBatalha{
 	protected Peca[][] campo;
 	protected ArrayList<NavioGuerra> naviosGuerra = new ArrayList<NavioGuerra>();
 	protected ArrayList<PortaAvioes> portaAvioes = new ArrayList<PortaAvioes>();
+	public Random rnd = new Random(System.currentTimeMillis());
 	
 	public static void main(String[] args){
 		
-		CampoBatalha cb2 = new CampoBatalha();
+		CampoBatalha cb = new CampoBatalha();
 		
-		for (int i = 0; i < cb2.campo.length; i++) {
-			System.out.print(cb2.linhas[i] + " ");
-			for (int j = 0; j < cb2.campo[i].length; j++) {
-				System.out.print(cb2.campo[i][j].getTPeca().getForma());
+		for (int i = 0; i < cb.campo.length; i++) {
+			System.out.print(cb.linhas[i] + " ");
+			for (int j = 0; j < cb.campo[i].length; j++) {
+				System.out.print(cb.campo[i][j].getTPeca().getForma());
 			}
 			System.out.println();
 		}
-		for (int i = 0; i < cb2.campo.length; i++) {
-			System.out.print("   " + cb2.colunas[i] );
+		for (int i = 0; i < cb.campo.length; i++) {
+			System.out.print("   " + cb.colunas[i] );
 		}
 		System.out.println("\n");
 		System.out.println("\n");
 		
 		String a = "C7";
-		int L = cb2.getIndexOfLinhasChar(a.charAt(0));
-		int C = cb2.getIndexOfColunasChar(a.charAt(1));
+		int L = cb.getIndexOfLinhasChar(a.charAt(0));
+		int C = cb.getIndexOfColunasChar(a.charAt(1));
 		System.out.println(L);
 		System.out.println(C);
-		cb2.campo[L][C].getTPeca().setAtingido(true);
-		System.out.println(cb2.campo[L][C].getTPeca().getForma());
+		cb.campo[L][C].getTPeca().setAtingido(true);
+		System.out.println(cb.campo[L][C].getTPeca().getForma());
+		String[] cell = cb.getRandomicCell();
+		System.out.print(cell[0] + " " + cell[1]);
 	}
 	/**
 	 * 
 	 */
 	public CampoBatalha() {
+		initCampo();
+		
+	}
+	
+	private void initCampo(){
 		Agua a;
 		char[] posicao = new char[2];
 		campo = new Peca[linhas.length][colunas.length];
@@ -69,6 +79,28 @@ public class CampoBatalha{
 			}
 		}
 	}
+	
+	public int getIndexOfLinhas(String c){
+		int index = -1;
+		for (int i = 0; i < this.linhas.length; i++) {
+			if(this.linhas[i] == c){
+				index = i;
+				break;
+			}
+		}
+		return index;
+	}
+	
+	public int getIndexOfColunas(String c){
+		int index = -1;
+		for (int i = 0; i < this.colunas.length; i++) {
+			if(this.colunas[i] == c){
+				index = i;
+				break;
+			}
+		}
+		return index;
+	}	
 	
 	public int getIndexOfLinhasChar(char c){
 		int index = -1;
@@ -116,6 +148,27 @@ public class CampoBatalha{
 				}	
 			}
 		}
+	}
+	
+	public String[] getRandomicCell(){
+		int Lr = this.getPositiveRandomNumber(10,this.rnd);
+		int Cr = this.getPositiveRandomNumber(10,this.rnd);
+		String[] p = new String[2];
+		p[0] = this.linhas[Lr];
+		p[1] = this.colunas[Cr];
+		return p;
+	}
+	
+	public int getPositiveRandomNumber(int s, Random rnd){
+		List<Integer> aceitos = new ArrayList<Integer>();
+		for (int z = 0; z < s; z++) {
+			aceitos.add(z);
+		}
+		int n = rnd.nextInt(s);
+		while(n < 0){
+			n = rnd.nextInt(s);
+		}
+		return aceitos.get(n);
 	}
 	
 }
