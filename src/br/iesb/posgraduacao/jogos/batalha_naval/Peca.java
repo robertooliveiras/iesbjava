@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Peca <T extends Agua, PedacoNavioGuerra, PedacoPortaAvioes>{
 	private ArrayList<T> pecas = new ArrayList<T>();
-	private T pecateste;
+	private T peca;
 
 	public void adicionarPeca(T item){
 		pecas.add(item);
@@ -23,17 +23,17 @@ public class Peca <T extends Agua, PedacoNavioGuerra, PedacoPortaAvioes>{
 	}
 
 	/**
-	 * @return the pecateste
+	 * @return devolve o objeto do tipo genérico peca
 	 */
-	public T getPecaTeste() {
-		return pecateste;
+	public T getTPeca() {
+		return peca;
 	}
 
 	/**
-	 * @param pecateste the pecateste to set
+	 * @param recebe um objeto do tipo genérico e preenche o atributo peca com sua instância
 	 */
-	public void setPecaTeste(T peca) {
-		this.pecateste = peca;
+	public void setTPeca(T peca) {
+		this.peca = peca;
 	}
 	
 }

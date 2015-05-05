@@ -11,11 +11,11 @@ import java.util.ArrayList;
  */
 public class Alfabeto {
 	public ArrayList<Character> maiusculoChar = new ArrayList<Character>();
-	public ArrayList<String> maiusculoStr = new ArrayList<String>();
 	public ArrayList<Character> minusculoChar = new ArrayList<Character>();
+	public ArrayList<Character> minusculoMaiusculoChar = new ArrayList<Character>();
+	public ArrayList<String> maiusculoStr = new ArrayList<String>();
 	public ArrayList<String> minusculoStr = new ArrayList<String>();
 	public ArrayList<String> minusculoMaiusculoStr = new ArrayList<String>();
-	public ArrayList<Character> minusculoMaiusculoChar = new ArrayList<Character>();
 
 	/**
 	 * @param args
@@ -66,7 +66,7 @@ public class Alfabeto {
 		System.out.println(a.minusculoMaiusculoChar.get(51));
 	}
 	/**
-	 * @param maiusculoChar the maiusculoChar to set
+	 *
 	 */
 	public void initMinusculoMaiusculoChar() {
 		for (int i = 97; i <= 122; i++) {
@@ -75,7 +75,7 @@ public class Alfabeto {
 		}
 	}
 	/**
-	 * @param maiusculoChar the maiusculoChar to set
+	 *
 	 */
 	public void initMinusculoMaiusculoStr() {
 		Character a;
@@ -87,7 +87,7 @@ public class Alfabeto {
 		}
 	}
 	/**
-	 * @param maiusculoChar the maiusculoChar to set
+	 *
 	 */
 	public void initMinusculoStr() {
 		Character a;
@@ -98,7 +98,7 @@ public class Alfabeto {
 	}
 
 	/**
-	 * @param maiusculoChar the maiusculoChar to set
+	 *
 	 */
 	public void initMinusculoChar() {
 		for (int i = 97; i <= 122; i++) {
@@ -107,7 +107,7 @@ public class Alfabeto {
 	}
 
 	/**
-	 * @param maiusculoChar the maiusculoChar to set
+	 *
 	 */
 	public void initMaiusculoChar() {
 		for (int i = 65; i <= 90; i++) {
@@ -115,7 +115,7 @@ public class Alfabeto {
 		}
 	}
 	/**
-	 * @param maiusculoChar the maiusculoChar to set
+	 *
 	 */
 	public void initMaiusculoStr() {
 		Character a;
