@@ -35,6 +35,14 @@ public class Alfabeto {
 	}
 	
 	private final void testes(){
+		for (char a = 'a'; (int)a <= 122; a++) {
+			System.out.print(a);
+		}
+		System.out.println();
+		for (Character a = 'a'; (int)a <= 122; a++) {
+			System.out.print(a.toString());
+		}
+		System.out.println();
 
 		char ax1 = 'a';
 		String ax2 = "Z";

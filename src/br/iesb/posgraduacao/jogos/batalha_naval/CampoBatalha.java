@@ -68,6 +68,7 @@ public class CampoBatalha{
 		for (int i = 0; i < this.linhasChar.length; i++) {
 			if(this.linhasChar[i] == c){
 				index = i;
+				break;
 			}
 		}
 		return index;
@@ -78,6 +79,7 @@ public class CampoBatalha{
 		for (int i = 0; i < this.colunasChar.length; i++) {
 			if(this.colunasChar[i] == c){
 				index = i;
+				break;
 			}
 		}
 		return index;
