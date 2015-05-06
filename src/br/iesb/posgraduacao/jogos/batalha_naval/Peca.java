@@ -23,5 +23,9 @@ public class Peca <TipoPeca extends InterfacePeca>{
 	public String getTForma() {
 		return this.peca.getForma();
 	}
+
+	public void setPosicao(char[] posicao) {
+		this.peca.setPosicao(posicao);
+	}
 	
 }
