@@ -4,7 +4,8 @@ public class Peca <TipoPeca extends InterfacePeca>{
 	private TipoPeca peca;
 
 	/**
-	 * @return devolve o objeto do tipo genérico peca
+	 * @return TipoPeca peca
+	 * devolve o objeto do tipo genérico peca
 	 */
 	public TipoPeca getTPeca() {
 		return this.peca;

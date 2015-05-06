@@ -51,15 +51,17 @@ public class CampoBatalha{
 //		cb.campo[L][C].getTPeca().setAtingido(true);
 //		System.out.println(cb.campo[L][C].getTPeca().getForma());
 
-		char[] cell = cb.getRandomicCellChar();
+		char[] cell;
+		
+		cell = cb.getRandomicCellChar();
 		System.out.println(cell[0] + " " + cell[1]);
 		System.out.println(cb.getIndexOfLinhasChar(cell[0]) + " " + cb.getIndexOfColunasChar(cell[1]));
 		Agua ag = new Agua();
 		ag.setPosicao(cell);
-		ag.setVisivel(true);
 		ag.setAtingido(true);
+//		ag.setVisivel(false);
 		Peca<Agua> pa = new Peca<Agua>();
-		pa.setTPeca(ag);		
+		pa.setTPeca(ag);
 		cb.campo[cb.getIndexOfLinhasChar(cell[0])][cb.getIndexOfColunasChar(cell[1])] = pa;
 		
 		
@@ -68,7 +70,7 @@ public class CampoBatalha{
 //		System.out.println(cb.getIndexOfLinhasChar(cell[0]) + " " + cb.getIndexOfColunasChar(cell[1]));
 		PedacoNavioGuerra mpng = new PedacoNavioGuerra();
 		mpng.setPosicao(cell);
-		mpng.setVisivel(true);
+//		mpng.setVisivel(true);
 		mpng.setPosicao(cell);
 //		mpng.setAtingido(true);
 		Peca<PedacoNavioGuerra> png = new Peca<PedacoNavioGuerra>();
@@ -80,7 +82,7 @@ public class CampoBatalha{
 		System.out.println(cb.getIndexOfLinhasChar(cell[0]) + " " + cb.getIndexOfColunasChar(cell[1]));
 		PedacoPortaAvioes mppa = new PedacoPortaAvioes();
 		mppa.setPosicao(cell);
-		mppa.setVisivel(true);
+//		mppa.setVisivel(true);
 		mppa.setPosicao(cell);
 		Peca<PedacoPortaAvioes> ppa = new Peca<PedacoPortaAvioes>();
 		ppa.setTPeca(mppa);

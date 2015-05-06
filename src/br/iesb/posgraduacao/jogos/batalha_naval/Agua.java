@@ -8,20 +8,29 @@ public class Agua implements InterfacePeca {
 	private String forma = "~~~|";
 
 	public boolean isAtingido() {
-		return atingido;
+		return this.atingido;
 	}
 
 	public void setAtingido(boolean atingido) {
 		this.atingido = atingido;
+		this.visivel = true;
 		this.setForma("~0~|");
 	}
 
 	public boolean isVisivel() {
-		return visivel;
+		return this.visivel;
 	}
 
 	public void setVisivel(boolean visivel) {
 		this.visivel = visivel;
+		this.setForma("~~~|");
+		if (this.isAtingido()) {
+			if (visivel) {
+				this.setForma("~0~|");
+			}else{
+				this.setForma("~~~|");				
+			}
+		}
 	}
 
 	public char getLinha() {
