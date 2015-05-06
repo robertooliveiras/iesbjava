@@ -1,14 +1,8 @@
 package br.iesb.posgraduacao.jogos.batalha_naval;
 
 public class PedacoNavioGuerra extends PedacoNavio {
-	
-	private String forma = "[N]|";
-	
-	public PedacoNavioGuerra(char linha, char coluna) {
-		super(linha, coluna);
-	}
 
-
+	@Override
 	public void setAtingido(boolean destruir) {
 		if(!this.isAtingido() && destruir){
 			this.setVisivel(true);
@@ -23,14 +17,22 @@ public class PedacoNavioGuerra extends PedacoNavio {
 		}
 	}
 
+	@Override
 	public String getForma() {
-		return forma;
+		return this.getForma();
 	}
 
-	public void setForma(String forma) {
-		this.forma = forma;
+	@Override
+	public void setVisivel(boolean visivel) {
+		this.visivel = visivel;
+		if (visivel) {
+			if (this.isAtingido()) {
+				this.setForma("[x]|");
+			}else{
+				this.setForma("[N]|");
+			}
+		}else{
+			this.setForma("~~~|");
+		}
 	}
-	
-
-
 }

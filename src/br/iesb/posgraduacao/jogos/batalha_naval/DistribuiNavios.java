@@ -25,14 +25,14 @@ public class DistribuiNavios {
 			navios.get(i).setPosicaoInicio(posicaoInicio);
 			for (int j = 0; j < qtCanos; j++) {
 				if(orientacao == 'V'){
-					navios.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra(navios.get(i).linhas[j].charAt(0), '1'));
+					navios.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra());
 				}else{ //orientacao = H
 					if(navios.get(i).colunas[j] == "10"){
 						col = '0';
 					}else{
 						col = navios.get(i).colunas[j].charAt(0);
 					}
-					navios.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra('A', col));
+					navios.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra());
 				}	
 			}
 		}

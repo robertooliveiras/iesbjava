@@ -1,6 +1,6 @@
 package br.iesb.posgraduacao.jogos.batalha_naval;
 
-public class Agua {
+public class Agua implements InterfacePeca {
 	private boolean visivel = true;
 	private boolean atingido = false;
 	private char linha;

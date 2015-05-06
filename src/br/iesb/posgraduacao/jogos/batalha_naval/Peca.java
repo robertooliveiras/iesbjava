@@ -1,32 +1,13 @@
 package br.iesb.posgraduacao.jogos.batalha_naval;
 
-import java.util.ArrayList;
-
-public class Peca <T extends Agua, PedacoNavioGuerra, PedacoPortaAvioes>{
-	private ArrayList<T> pecas = new ArrayList<T>();
+public class Peca <T extends InterfacePeca>{
 	private T peca;
-
-	public void adicionarPeca(T item){
-		pecas.add(item);
-	}
-	
-	public ArrayList<T> getPecas(){
-		return this.pecas;
-	}
-	
-	public T getPeca(int i){
-		return this.pecas.get(i);
-	}
-	
-	public void removePeca(int i){
-		this.pecas.remove(i);
-	}
 
 	/**
 	 * @return devolve o objeto do tipo genérico peca
 	 */
 	public T getTPeca() {
-		return peca;
+		return this.peca;
 	}
 
 	/**

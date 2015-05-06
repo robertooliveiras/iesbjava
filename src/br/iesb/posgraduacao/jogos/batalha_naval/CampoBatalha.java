@@ -50,8 +50,53 @@ public class CampoBatalha{
 		System.out.println(C);
 		cb.campo[L][C].getTPeca().setAtingido(true);
 		System.out.println(cb.campo[L][C].getTPeca().getForma());
+
 		String[] cell = cb.getRandomicCell();
-		System.out.print(cell[0] + " " + cell[1]);
+		System.out.println(cell[0] + " " + cell[1]);
+		System.out.println(cb.getIndexOfLinhas(cell[0]) + " " + cb.getIndexOfColunas(cell[1]));
+		Peca<Agua> pa = new Peca<Agua>();
+		
+		cell = cb.getRandomicCell();
+		System.out.println(cell[0] + " " + cell[1]);
+		System.out.println(cb.getIndexOfLinhas(cell[0]) + " " + cb.getIndexOfColunas(cell[1]));
+		Peca<PedacoNavioGuerra> png = new Peca<PedacoNavioGuerra>();
+		PedacoNavioGuerra mpng = new PedacoNavioGuerra();
+//		mpng.setPosicao(posicao);
+		png.setTPeca(mpng);
+//		png.getTPeca().setPosicao(cell);
+		png.getTPeca().setVisivel(true);
+		
+		cell = cb.getRandomicCell();
+		System.out.println(cell[0] + " " + cell[1]);
+		System.out.println(cb.getIndexOfLinhas(cell[0]) + " " + cb.getIndexOfColunas(cell[1]));
+		Peca<PedacoPortaAvioes> ppa = new Peca<PedacoPortaAvioes>();
+		PedacoPortaAvioes mppa = new PedacoPortaAvioes();
+//		mpng.setPosicao(posicao);
+		ppa.setTPeca(mppa);
+//		png.getTPeca().setPosicao(cell);
+		ppa.getTPeca().setVisivel(true);
+		
+		cb.campo[cb.getIndexOfLinhas(cell[0])][cb.getIndexOfColunas(cell[1])] = pa;
+		cb.campo[cb.getIndexOfLinhas(cell[0])][cb.getIndexOfColunas(cell[1])] = png;
+		cb.campo[cb.getIndexOfLinhas(cell[0])][cb.getIndexOfColunas(cell[1])] = ppa;
+		
+
+		for (int i = 0; i < cb.campo.length; i++) {
+			System.out.print(cb.linhas[i] + " ");
+			for (int j = 0; j < cb.campo[i].length; j++) {
+				System.out.print(cb.campo[i][j].getTPeca().getForma());
+			}
+			System.out.println();
+		}
+		for (int i = 0; i < cb.campo.length; i++) {
+			System.out.print("   " + cb.colunas[i] );
+		}
+		System.out.println("\n");
+		System.out.println("\n");
+		
+		
+		System.exit(0);
+			
 	}
 	/**
 	 * 
@@ -137,14 +182,16 @@ public class CampoBatalha{
 			this.naviosGuerra.get(i).setPosicaoInicio(posicaoInicio);
 			for (int j = 0; j < qtCanos; j++) {
 				if(orientacao == 'V'){
-					this.naviosGuerra.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra(this.naviosGuerra.get(i).linhas[j].charAt(0), '1'));
+					this.naviosGuerra.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra());
+					//this.naviosGuerra.get(i).linhas[j].charAt(0), '1'
 				}else{ //orientacao = H
 					if(this.naviosGuerra.get(i).colunas[j] == "10"){
 						col = '0';
 					}else{
 						col = this.naviosGuerra.get(i).colunas[j].charAt(0);
 					}
-					this.naviosGuerra.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra('A', col));
+					this.naviosGuerra.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra());
+					//'A', col
 				}	
 			}
 		}
@@ -160,11 +207,11 @@ public class CampoBatalha{
 	}
 	
 	public int getPositiveRandomNumber(int s, Random rnd){
+		int n = rnd.nextInt(s);
 		List<Integer> aceitos = new ArrayList<Integer>();
 		for (int z = 0; z < s; z++) {
 			aceitos.add(z);
 		}
-		int n = rnd.nextInt(s);
 		while(n < 0){
 			n = rnd.nextInt(s);
 		}
