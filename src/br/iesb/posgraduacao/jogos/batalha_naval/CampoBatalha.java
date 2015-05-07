@@ -10,8 +10,8 @@ import java.util.Random;
 /*** 
  * @author RobertoOliveira
  * @since 2015/05/04
- * Essa classe monta o campo de batalha do jogo batalha naval
- * Por padrão todas as peças do campo são do tipo Agua e podrão
+ * Essa classe monta o campoDeBatalha de batalha do jogo batalha naval
+ * Por padrão todas as peças do campoDeBatalha são do tipo Agua e podrão
  * ser configurados para o tipo Navio de Guerra de 1 a 4 canos
  * ou para o tipo Porta Aviões em pormato de T.
  *
@@ -21,7 +21,7 @@ public class CampoBatalha{
 	public String[] colunas = {"1","2","3","4","5","6","7","8","9","10"};
 	public Character[] linhasChar = {'A','B','C','D','E','F','G','H','I','J'};
 	public Character[] colunasChar = {'1','2','3','4','5','6','7','8','9','0'};
-	protected Peca[][] campo;
+	protected Peca[][] campoDeBatalha;
 	protected ArrayList<NavioGuerra> naviosGuerra = new ArrayList<NavioGuerra>();
 	protected ArrayList<PortaAvioes> portaAvioes = new ArrayList<PortaAvioes>();
 	public Random rnd = new Random(System.currentTimeMillis());
@@ -35,147 +35,280 @@ public class CampoBatalha{
 	}
 	
 	/**
-	 * Utilizada no construtor para preencher a grelha (representada pelo atributo campo)
+	 * Utilizada no construtor para preencher a grelha (representada pelo atributo campoDeBatalha)
 	 * com peças do tipo Agua (usando generics). Após a criação da grelha, as peças serão distribuídas
 	 * no tabuleiro conforme regra do requisito do exercício.
 	 */
 	private void initCampo(){
 		Agua a;
 		char[] posicao = new char[2];
-		campo = new Peca[linhas.length][colunas.length];
+		Peca pt;
+		campoDeBatalha = new Peca[linhas.length][colunas.length];
 		for (int i = 0; i < linhas.length; i++) {
 			for (int j = 0; j < colunas.length; j++) {
 				posicao[0] = linhasChar[i];
 				posicao[1] = colunasChar[j];
 				a = new Agua();
 				a.setPosicao(posicao);
-
-				Peca pt = new Peca();
+				pt = new Peca();
 				pt.setTPeca(a);
 				pt.getTPeca().setPosicao(posicao);
-				campo[i][j] = pt;
+				campoDeBatalha[i][j] = pt;
 			}
 		}
 	}
 	
 	/**
-	 * A distribuição aleatória contará com
+	 * A distribuição aleatória dos navios de guerra contará com
 	 * 4 navios de guerra com 1 cano 
 	 * 3 navios de guerra com 2 canos (verticais ou horizontais)
 	 * 2 navios de guerra com 3 canos (verticais ou horizontais)
 	 * 1 navio de guerra com 4 canos (verticais ou horizontais)
+	 */
+	public void posicionaNavioGuerraAleatoriamente(int t){
+		char[] posicaoInicial = new char[2];
+		int[] indexPosicaoInicial = new int[2];
+		int eixo; // 0 = horizontal; 1 = vertical
+		int direcao; // 0 = direita(v) ou cima(h); 1 = esquerda(v) ou baixo(h)
+		boolean posicaoPAok = false;
+		while(!posicaoPAok){
+			if( t > 4 ){
+				continue;
+			}
+			posicaoInicial = getRandomicCellChar();
+			eixo = getPositiveRandomNumber(2, this.rnd); // 0 = horizontal; 1 = vertical
+			System.out.println(posicaoInicial[0] + "" + posicaoInicial[1] + " " + eixo);
+			if(validaPosicaoInicialNG(posicaoInicial, eixo, t)){
+				indexPosicaoInicial[0] = getIndexOfLinhasChar(posicaoInicial[0]);
+				indexPosicaoInicial[1] = getIndexOfColunasChar(posicaoInicial[1]);
+				posicaoPAok = validaDisponibilidadePosicaoPA(indexPosicaoInicial, eixo, t);
+				if(posicaoPAok){
+					posicionaNavioGuerra(indexPosicaoInicial, eixo, t);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * A distribuição aleatória do porta aviões contará com
 	 * 1 porta aviões com 5 canos (em T) (base horizontal virado para direita ou esquerda; ou vertical e virado para cima ou para baixo)
 	 */
 	public void posicionaPortaAvioesAleatoriamente(){
-		
 		//posiciona o porta aviões
 		char[] posicaoInicial = new char[2];
+		int[] indexPosicaoInicial = new int[2];
 		int eixo; // 0 = horizontal; 1 = vertical
 		int direcao; // 0 = direita(v) ou cima(h); 1 = esquerda(v) ou baixo(h)
-		boolean posicaoPAok;
-		do{
-			posicaoPAok = true;
+		boolean posicaoPAok = false;
+		while(!posicaoPAok){
 			posicaoInicial = getRandomicCellChar();
 			eixo = getPositiveRandomNumber(2, this.rnd); // 0 = horizontal; 1 = vertical
 			direcao = getPositiveRandomNumber(2, this.rnd); // 0 = direita(v) ou cima(h); 1 = esquerda(v) ou baixo(h)
-			posicaoPAok = validaPosicaoInicialPA(posicaoInicial, eixo, direcao);
-			if(posicaoPAok){
-				posicaoPAok = validaDisponibilidadePosicaoPA(posicaoInicial, eixo, direcao);
+			if(validaPosicaoInicialPA(posicaoInicial, eixo, direcao)){
+				indexPosicaoInicial[0] = getIndexOfLinhasChar(posicaoInicial[0]);
+				indexPosicaoInicial[1] = getIndexOfColunasChar(posicaoInicial[1]);
+				posicaoPAok = validaDisponibilidadePosicaoPA(indexPosicaoInicial, eixo, direcao);
+				if(posicaoPAok){
+					posicionaPortaAvioes(indexPosicaoInicial, eixo, direcao);
+				}
 			}
-		}while(!posicaoPAok);
+		}
+	}
+	public void posicionaNavioGuerra(int[] p, int e, int t){
+		PedacoNavioGuerra mpng;
+		Peca<PedacoNavioGuerra> png;
+		ArrayList<Peca> pecasNavioGuerra = new ArrayList<Peca>();
+		for (int i = 0; i < t; i++) {
+			mpng = new PedacoNavioGuerra();
+			mpng.setPosicao(getCharValuesByIndex(p));
+			mpng.setVisivel(true);
+			png = new Peca<PedacoNavioGuerra>();
+			png.setTPeca(mpng);
+			pecasNavioGuerra.add(png);
+		}
+		for (int i = 0; i < pecasNavioGuerra.size(); i++) {
+			this.campoDeBatalha[p[0]][p[1]] = pecasNavioGuerra.get(0);//posicao inicial
+		}
 		
-//		PedacoPortaAvioes mppa;
-//		mppa = new PedacoPortaAvioes();
-//		mppa.setPosicao(posicaoInicial);
-//		mppa.setVisivel(true);
-//		Peca<PedacoPortaAvioes> ppa = new Peca<PedacoPortaAvioes>();
-//		ppa.setTPeca(mppa);
-//		this.campo[getIndexOfLinhasChar(posicaoInicial[0])][getIndexOfColunasChar(posicaoInicial[1])] = ppa;
+		
+//		
 //		if(e == 0){//horizontal => direçao será baixo(0)=T ou cima(1)=T invertido
 //			if(d == 0){
-//				if(!(this.campo[p[0]+1][p[1]].getTPeca() instanceof Agua)
-//					|| !(this.campo[p[0]+2][p[1]].getTPeca() instanceof Agua)
-//					|| !(this.campo[p[0]][p[1]-1].getTPeca() instanceof Agua)
-//					|| !(this.campo[p[0]][p[1]+1].getTPeca() instanceof Agua)){
-//				}
+//				this.campoDeBatalha[p[0]+1][p[1]] = pecasPortaAvioes.get(1);
+//				this.campoDeBatalha[p[0]+2][p[1]] = pecasPortaAvioes.get(2);
+//				this.campoDeBatalha[p[0]][p[1]-1] = pecasPortaAvioes.get(3);
+//				this.campoDeBatalha[p[0]][p[1]+1] = pecasPortaAvioes.get(4);
 //			}else{
-//				if(!(this.campo[p[0]-1][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]-2][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]-1].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]+1].getTPeca() instanceof Agua)){
-//					}
+//				this.campoDeBatalha[p[0]-1][p[1]] = pecasPortaAvioes.get(1);
+//				this.campoDeBatalha[p[0]-2][p[1]] = pecasPortaAvioes.get(2);
+//				this.campoDeBatalha[p[0]][p[1]-1] = pecasPortaAvioes.get(3);
+//				this.campoDeBatalha[p[0]][p[1]+1] = pecasPortaAvioes.get(4);
 //			}
 //		}else{//vertical => direçao será direita(0)H sem aste direita ou esquerda(1) H sem aste esquerda
 //			if(d == 0){
-//				if(!(this.campo[p[0]-1][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]+1][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]+1].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]+2].getTPeca() instanceof Agua)){
-//					}
+//				this.campoDeBatalha[p[0]-1][p[1]] = pecasPortaAvioes.get(1);
+//				this.campoDeBatalha[p[0]+1][p[1]] = pecasPortaAvioes.get(2);
+//				this.campoDeBatalha[p[0]][p[1]+1] = pecasPortaAvioes.get(3);
+//				this.campoDeBatalha[p[0]][p[1]+2] = pecasPortaAvioes.get(4);
 //			}else{
-//				if(!(this.campo[p[0]-1][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]+1][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]-1].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]-2].getTPeca() instanceof Agua)){
-//					}
+//				this.campoDeBatalha[p[0]-1][p[1]] = pecasPortaAvioes.get(1);
+//				this.campoDeBatalha[p[0]+1][p[1]] = pecasPortaAvioes.get(2);
+//				this.campoDeBatalha[p[0]][p[1]-1] = pecasPortaAvioes.get(3);
+//				this.campoDeBatalha[p[0]][p[1]-2] = pecasPortaAvioes.get(4);
 //			}
 //		}
 	}
-	public boolean validaDisponibilidadePosicaoPA(char[] p, int e, int d){
-		if(!(this.campo[getIndexOfLinhasChar(p[0])][getIndexOfColunasChar(p[1])].getTPeca() instanceof Agua)){
+	public void posicionaPortaAvioes(int[] p, int e, int d){
+		PedacoPortaAvioes mppa;
+		Peca<PedacoPortaAvioes> ppa;
+		ArrayList<Peca> pecasPortaAvioes = new ArrayList<Peca>();
+		for (int i = 0; i < 5; i++) {
+			mppa = new PedacoPortaAvioes();
+			mppa.setPosicao(getCharValuesByIndex(p));
+			mppa.setVisivel(true);
+			ppa = new Peca<PedacoPortaAvioes>();
+			ppa.setTPeca(mppa);
+			pecasPortaAvioes.add(ppa);
+		}
+		
+		this.campoDeBatalha[p[0]][p[1]] = pecasPortaAvioes.get(0);//posicao inicial
+		
+		if(e == 0){//horizontal => direçao será baixo(0)=T ou cima(1)=T invertido
+			if(d == 0){
+				this.campoDeBatalha[p[0]+1][p[1]] = pecasPortaAvioes.get(1);
+				this.campoDeBatalha[p[0]+2][p[1]] = pecasPortaAvioes.get(2);
+				this.campoDeBatalha[p[0]][p[1]-1] = pecasPortaAvioes.get(3);
+				this.campoDeBatalha[p[0]][p[1]+1] = pecasPortaAvioes.get(4);
+			}else{
+				this.campoDeBatalha[p[0]-1][p[1]] = pecasPortaAvioes.get(1);
+				this.campoDeBatalha[p[0]-2][p[1]] = pecasPortaAvioes.get(2);
+				this.campoDeBatalha[p[0]][p[1]-1] = pecasPortaAvioes.get(3);
+				this.campoDeBatalha[p[0]][p[1]+1] = pecasPortaAvioes.get(4);
+			}
+		}else{//vertical => direçao será direita(0)H sem aste direita ou esquerda(1) H sem aste esquerda
+			if(d == 0){
+				this.campoDeBatalha[p[0]-1][p[1]] = pecasPortaAvioes.get(1);
+				this.campoDeBatalha[p[0]+1][p[1]] = pecasPortaAvioes.get(2);
+				this.campoDeBatalha[p[0]][p[1]+1] = pecasPortaAvioes.get(3);
+				this.campoDeBatalha[p[0]][p[1]+2] = pecasPortaAvioes.get(4);
+			}else{
+				this.campoDeBatalha[p[0]-1][p[1]] = pecasPortaAvioes.get(1);
+				this.campoDeBatalha[p[0]+1][p[1]] = pecasPortaAvioes.get(2);
+				this.campoDeBatalha[p[0]][p[1]-1] = pecasPortaAvioes.get(3);
+				this.campoDeBatalha[p[0]][p[1]-2] = pecasPortaAvioes.get(4);
+			}
+		}
+	}
+	public boolean validaDisponibilidadePosicaoNG(int[] p, int e, int t){
+		if(e == 0){//horizontal => direçao direita
+			int l = p[0];
+			int c = p[1];
+			for (int i = 0; i < t; i++) {
+				if(!(this.campoDeBatalha[p[0]][p[1]++].getTPeca() instanceof Agua)){
+					return false;
+				}
+			}
+		}else{//vertical => direçao baixo
+			for (int i = 0; i < t; i++) {
+				if(!(this.campoDeBatalha[p[0]++][p[1]].getTPeca() instanceof Agua)){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	public boolean validaDisponibilidadePosicaoPA(int[] p, int e, int d){
+		if(!(this.campoDeBatalha[p[0]][p[1]].getTPeca() instanceof Agua)){
 			return false;
 		}
-//		if(e == 0){//horizontal => direçao será baixo(0)=T ou cima(1)=T invertido
-//			if(d == 0){
-		//this.campo[getIndexOfLinhasChar(p[0]+1)][getIndexOfColunasChar(p[1])].getTPeca()
-		//this.campo[getIndexOfLinhasChar(p[0]+2)][getIndexOfColunasChar(p[1])].getTPeca()
-		//this.campo[getIndexOfLinhasChar(p[0])][getIndexOfColunasChar(p[1]-1)].getTPeca()
-		//this.campo[getIndexOfLinhasChar(p[0])][getIndexOfColunasChar(p[1]+1)].getTPeca()
-//				if(!(this.campo[p[0]+1][p[1]].getTPeca() instanceof Agua)
-//					|| !(this.campo[p[0]+2][p[1]].getTPeca() instanceof Agua)
-//					|| !(this.campo[p[0]][p[1]-1].getTPeca() instanceof Agua)
-//					|| !(this.campo[p[0]][p[1]+1].getTPeca() instanceof Agua)){
-//					return false;
-//				}
-//			}else{
-//				if(!(this.campo[p[0]-1][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]-2][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]-1].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]+1].getTPeca() instanceof Agua)){
-//						return false;
-//					}
-//			}
-//		}else{//vertical => direçao será direita(0)H sem aste direita ou esquerda(1) H sem aste esquerda
-//			if(d == 0){
-//				if(!(this.campo[p[0]-1][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]+1][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]+1].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]+2].getTPeca() instanceof Agua)){
-//						return false;
-//					}
-//			}else{
-//				if(!(this.campo[p[0]-1][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]+1][p[1]].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]-1].getTPeca() instanceof Agua)
-//						|| !(this.campo[p[0]][p[1]-2].getTPeca() instanceof Agua)){
-//						return false;
-//					}
-//			}
-//		}
+		if(e == 0){//horizontal => direçao 
+			if(d == 0){
+				if(!(this.campoDeBatalha[p[0]+1][p[1]].getTPeca() instanceof Agua)
+					|| !(this.campoDeBatalha[p[0]+2][p[1]].getTPeca() instanceof Agua)
+					|| !(this.campoDeBatalha[p[0]][p[1]-1].getTPeca() instanceof Agua)
+					|| !(this.campoDeBatalha[p[0]][p[1]+1].getTPeca() instanceof Agua)){
+					return false;
+				}
+			}else{
+				if(!(this.campoDeBatalha[p[0]-1][p[1]].getTPeca() instanceof Agua)
+						|| !(this.campoDeBatalha[p[0]-2][p[1]].getTPeca() instanceof Agua)
+						|| !(this.campoDeBatalha[p[0]][p[1]-1].getTPeca() instanceof Agua)
+						|| !(this.campoDeBatalha[p[0]][p[1]+1].getTPeca() instanceof Agua)){
+						return false;
+					}
+			}
+		}else{//vertical => direçao será direita(0)H sem aste direita ou esquerda(1) H sem aste esquerda
+			if(d == 0){
+				if(!(this.campoDeBatalha[p[0]-1][p[1]].getTPeca() instanceof Agua)
+						|| !(this.campoDeBatalha[p[0]+1][p[1]].getTPeca() instanceof Agua)
+						|| !(this.campoDeBatalha[p[0]][p[1]+1].getTPeca() instanceof Agua)
+						|| !(this.campoDeBatalha[p[0]][p[1]+2].getTPeca() instanceof Agua)){
+						return false;
+					}
+			}else{
+				if(!(this.campoDeBatalha[p[0]-1][p[1]].getTPeca() instanceof Agua)
+						|| !(this.campoDeBatalha[p[0]+1][p[1]].getTPeca() instanceof Agua)
+						|| !(this.campoDeBatalha[p[0]][p[1]-1].getTPeca() instanceof Agua)
+						|| !(this.campoDeBatalha[p[0]][p[1]-2].getTPeca() instanceof Agua)){
+						return false;
+					}
+			}
+		}
+		return true;
+	}
+	
+	public boolean validaPosicaoInicialNG(char[] p, int e, int t){
+		if(getIndexOfLinhasChar(p[0]) == -1 || getIndexOfColunasChar(p[1]) == - 1){//index não encontrado
+			return false;
+		}
+		
+		if(e == 0){ //horizontal => direçao será baixo(0)=T ou cima(1)=T invertido
+			if(getIndexOfLinhasChar(p[0])+t > colunas.length - 1){//index não encontrado
+				return false;
+			}
+		}else{//vertical => direçao será direita(0) ou esquerda(1)
+			if(getIndexOfLinhasChar(p[1])+t > linhas.length - 1){//index não encontrado
+				return false;
+			}
+		}
 		return true;
 	}
 	
 	public boolean validaPosicaoInicialPA(char[] p, int e, int d){
+		if(getIndexOfLinhasChar(p[0]) == -1 || getIndexOfColunasChar(p[1]) == - 1){//index não encontrado
+			return false;
+		}
+		if(getIndexOfLinhasChar(p[0]) == 0 && getIndexOfColunasChar(p[1]) == 0){//A1
+			return false;
+		}
+		if(getIndexOfLinhasChar(p[0]) == linhas.length - 1 && getIndexOfColunasChar(p[1]) == colunas.length - 1){//J10
+			return false;
+		}
+		if(getIndexOfLinhasChar(p[0]) == 0 && getIndexOfColunasChar(p[1]) == colunas.length - 1){//A10
+			return false;
+		}
+		if(getIndexOfLinhasChar(p[0]) == linhas.length - 1 && getIndexOfColunasChar(p[1]) == 0){//J1
+			return false;
+		}
 		if(e == 0){ //horizontal => direçao será baixo(0)=T ou cima(1)=T invertido
 			if(getIndexOfColunasChar(p[1]) == 0 || getIndexOfColunasChar(p[1]) == colunas.length - 1){//coluna 0 ou última coluna
 				return false;
 			}
 			if(d == 0){// baixo (parece um T invertido). não pode linha A(0) nem B(1)
-				if(getIndexOfLinhasChar(p[0]) - 2 < 0){//passou do limite da linha
+				if(getIndexOfLinhasChar(p[0]) - 2 < 0 ){//passou do limite da linha
+					return false;
+				}
+				if(getIndexOfLinhasChar(p[0]) + 2 > linhas.length - 1 ){//passou do limite da linha
 					return false;
 				}
 			 }else{ // cima (parece um T). não pode linha I(9) nem J(10)
-				if(getIndexOfLinhasChar(p[0]) + 2 > linhas.length - 1){//passou do limite da linha
+				if(getIndexOfLinhasChar(p[0]) + 2 > linhas.length - 1 ){//passou do limite da linha
+					return false;
+				}
+				if(getIndexOfLinhasChar(p[0]) - 1 < 0 || getIndexOfLinhasChar(p[0]) + 1 > colunas.length - 1 ){//passou do limite da linha
+					return false;
+				}
+				if(getIndexOfLinhasChar(p[0]) - 2 < 0 || getIndexOfLinhasChar(p[0]) + 2 > colunas.length - 1 ){//passou do limite da linha
 					return false;
 				}
 			}
@@ -184,11 +317,11 @@ public class CampoBatalha{
 				return false;
 			}
 			if(d == 0){ // direita (parece um H sem aste da direita). não pode coluna 9 nem 10
-				if(getIndexOfColunasChar(p[1]) + 2 > colunas.length - 1){//passou do limite da coluna
+				if(getIndexOfColunasChar(p[1]) + 2 > colunas.length - 1 ){//passou do limite da coluna
 					return false;
 				}
 			}else{ // baixo (parece um H sem aste da esquerda). não pode coluna 1 nem 2
-				if(getIndexOfColunasChar(p[1]) - 2 < 0){//passou do limite da coluna
+				if(getIndexOfColunasChar(p[1]) - 2 < 0 ){//passou do limite da coluna
 					return false;
 				}
 			}
@@ -200,19 +333,19 @@ public class CampoBatalha{
 		
 		CampoBatalha cb = new CampoBatalha();
 		
-		for (int i = 0; i < cb.campo.length; i++) {
+		for (int i = 0; i < cb.campoDeBatalha.length; i++) {
 			System.out.print(cb.linhas[i] + " ");
-			for (int j = 0; j < cb.campo[i].length; j++) {
-				System.out.print(cb.campo[i][j].getTPeca().getForma());
+			for (int j = 0; j < cb.campoDeBatalha[i].length; j++) {
+				System.out.print(cb.campoDeBatalha[i][j].getTPeca().getForma());
 			}
 			System.out.println();
 		}
-		for (int i = 0; i < cb.campo.length; i++) {
+		for (int i = 0; i < cb.campoDeBatalha.length; i++) {
 			System.out.print("   " + cb.colunas[i] );
 		}
 		System.out.println("\n");
 		System.out.println("\n");
-		System.out.println(!(cb.campo[0][0].getTPeca() instanceof Agua));
+		System.out.println(!(cb.campoDeBatalha[0][0].getTPeca() instanceof Agua));
 		
 //		String a = "C7";
 //		int L = cb.getIndexOfLinhasChar(a.charAt(0));
@@ -227,7 +360,7 @@ public class CampoBatalha{
 		cell = cb.getRandomicCellChar();
 		System.out.println(cell[0] + " " + cell[1]);
 		System.out.println(cb.getIndexOfLinhasChar(cell[0]) + " " + cb.getIndexOfColunasChar(cell[1]));
-		cb.campo[cb.getIndexOfLinhasChar(cell[0])][cb.getIndexOfColunasChar(cell[1])].getTPeca().setAtingido(true);
+		cb.campoDeBatalha[cb.getIndexOfLinhasChar(cell[0])][cb.getIndexOfColunasChar(cell[1])].getTPeca().setAtingido(true);
 //		Agua ag = new Agua();
 //		ag.setPosicao(cell);
 //		ag.setAtingido(true);
@@ -247,7 +380,7 @@ public class CampoBatalha{
 //		mpng.setAtingido(true);
 		Peca<PedacoNavioGuerra> png = new Peca<PedacoNavioGuerra>();
 		png.setTPeca(mpng);
-		cb.campo[cb.getIndexOfLinhasChar(cell[0])][cb.getIndexOfColunasChar(cell[1])] = png;
+		cb.campoDeBatalha[cb.getIndexOfLinhasChar(cell[0])][cb.getIndexOfColunasChar(cell[1])] = png;
 		
 		cell = cb.getRandomicCellChar();
 		System.out.println(cell[0] + " " + cell[1]);
@@ -258,23 +391,37 @@ public class CampoBatalha{
 		mppa.setPosicao(cell);
 		Peca<PedacoPortaAvioes> ppa = new Peca<PedacoPortaAvioes>();
 		ppa.setTPeca(mppa);
-		cb.campo[cb.getIndexOfLinhasChar(cell[0])][cb.getIndexOfColunasChar(cell[1])] = ppa;
+		cb.campoDeBatalha[cb.getIndexOfLinhasChar(cell[0])][cb.getIndexOfColunasChar(cell[1])] = ppa;
 		
 
-		for (int i = 0; i < cb.campo.length; i++) {
+		for (int i = 0; i < cb.campoDeBatalha.length; i++) {
 			System.out.print(cb.linhas[i] + " ");
-			for (int j = 0; j < cb.campo[i].length; j++) {
-				System.out.print(cb.campo[i][j].getTPeca().getForma());
+			for (int j = 0; j < cb.campoDeBatalha[i].length; j++) {
+				System.out.print(cb.campoDeBatalha[i][j].getTPeca().getForma());
 			}
 			System.out.println();
 		}
-		for (int i = 0; i < cb.campo.length; i++) {
+		for (int i = 0; i < cb.campoDeBatalha.length; i++) {
 			System.out.print("   " + cb.colunas[i] );
 		}
 		System.out.println("\n");
 		System.out.println("\n");
 		
 		System.exit(0);
+	}
+	
+	public char[] getCharValuesByIndex(int[] p){
+		char[] v = new char[2];
+		v[0] = linhasChar[p[0]];
+		v[1] = colunasChar[p[1]];
+		return v;
+	}
+	
+	public String[] getStrValuesByIndex(int[] p){
+		String[] v = new String[2];
+		v[0] = linhas[p[0]];
+		v[1] = colunas[p[1]];
+		return v;
 	}
 	
 	public int getIndexOfLinhas(String c){
@@ -359,8 +506,8 @@ public class CampoBatalha{
 	}
 	
 	public char[] getRandomicCellChar(){
-		int Lr = this.getPositiveRandomNumber(10,this.rnd);
-		int Cr = this.getPositiveRandomNumber(10,this.rnd);
+		int Lr = this.getPositiveRandomNumber(9,this.rnd);
+		int Cr = this.getPositiveRandomNumber(9,this.rnd);
 		char[] p = new char[2];
 		p[0] = this.linhasChar[Lr];
 		p[1] = this.colunasChar[Cr];

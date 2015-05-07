@@ -50,4 +50,9 @@ public abstract class PedacoNavio implements InterfacePeca{
 		this.setLinha(posicao[0]);
 		this.setColuna(posicao[1]);
 	}
+	
+//	public void setPosicaoPorIndice(int[] posicao) {
+//		this.setLinha(posicao[0]);
+//		this.setColuna(posicao[1]);
+//	}
 }
