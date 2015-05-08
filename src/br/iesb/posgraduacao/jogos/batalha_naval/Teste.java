@@ -97,7 +97,7 @@ public class Teste {
 	}
 	
 
-	public ArrayList<NavioGuerra> criarNaviosGuerra(int qtNavios, int qtCanos, char orientacao){
+	public ArrayList<NavioGuerra> criarNaviosGuerra(int qtNavios, Integer qtCanos, char orientacao){
 		ArrayList<NavioGuerra> navios = new ArrayList<NavioGuerra>();
 		char col = '0';
 		char[] posicaoInicio = {'A','1'};
@@ -111,14 +111,14 @@ public class Teste {
 			navios.get(i).setPosicaoInicio(posicaoInicio);
 			for (int j = 0; j < qtCanos; j++) {
 				if(orientacao == 'V'){
-					navios.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra());
+					navios.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra(qtCanos.toString().charAt(0)));
 				}else{ //orientacao = H
 					if(navios.get(i).colunas[j] == "10"){
 						col = '0';
 					}else{
 						col = navios.get(i).colunas[j].charAt(0);
 					}
-					navios.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra());
+					navios.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra(qtCanos.toString().charAt(0)));
 				}	
 			}
 		}

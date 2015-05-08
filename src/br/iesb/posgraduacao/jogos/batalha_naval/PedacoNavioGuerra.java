@@ -1,12 +1,18 @@
 package br.iesb.posgraduacao.jogos.batalha_naval;
 
 public class PedacoNavioGuerra extends PedacoNavio {
+	private char tipo = ' ';
+	private int id;
+	
+	PedacoNavioGuerra(char t){
+		setTipo(t);
+	}
 
 	@Override
 	public void setAtingido(boolean destruir) {
 		if(!super.isAtingido() && destruir){
 			super.setVisivel(true);
-			super.setForma("[x]|");
+			super.setForma("xN"+this.getTipo()+"x|");
 			super.setAtingido(destruir);
 		}else{
 			if(super.isAtingido() && !destruir){
@@ -27,12 +33,34 @@ public class PedacoNavioGuerra extends PedacoNavio {
 		super.visivel = visivel;
 		if (visivel) {
 			if (super.isAtingido()) {
-				super.setForma("[x]|");
+				super.setForma("xN"+this.getTipo()+"x|");
 			}else{
-				super.setForma("[N]|");
+				super.setForma("[N"+this.getTipo()+"]|");
 			}
 		}else{
-			super.setForma("~~~|");
+			super.setForma("~~~~|");
 		}
+	}
+
+	public char getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(char tipo) {
+		this.tipo = tipo;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 }

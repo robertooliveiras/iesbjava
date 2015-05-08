@@ -5,7 +5,7 @@ public class PedacoPortaAvioes extends PedacoNavio {
 	public void setAtingido(boolean destruir) {
 		if(!super.isAtingido() && destruir){
 			super.setVisivel(true);
-			super.setForma("[x]|");
+			super.setForma("xP1x|");
 			super.setAtingido(destruir);
 		}else{
 			if(super.isAtingido() && !destruir){
@@ -26,12 +26,12 @@ public class PedacoPortaAvioes extends PedacoNavio {
 		super.visivel = visivel;
 		if (visivel) {
 			if (super.isAtingido()) {
-				super.setForma("[x]|");
+				super.setForma("xP1x|");
 			}else{
-				super.setForma("[P]|");
+				super.setForma("[P1]|");
 			}
 		}else{
-			super.setForma("~~~|");
+			super.setForma("~~~~|");
 		}
 	}
 }

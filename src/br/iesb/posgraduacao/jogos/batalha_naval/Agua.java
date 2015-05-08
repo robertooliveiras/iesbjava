@@ -5,7 +5,7 @@ public class Agua implements InterfacePeca {
 	private boolean atingido = false;
 	private char linha;
 	private char coluna;
-	private String forma = "~~~|";
+	private String forma = "~~~~|";
 
 	public boolean isAtingido() {
 		return this.atingido;
@@ -14,7 +14,7 @@ public class Agua implements InterfacePeca {
 	public void setAtingido(boolean atingido) {
 		this.atingido = atingido;
 		this.visivel = true;
-		this.setForma("~0~|");
+		this.setForma("~§§~|");
 	}
 
 	public boolean isVisivel() {
@@ -23,12 +23,12 @@ public class Agua implements InterfacePeca {
 
 	public void setVisivel(boolean visivel) {
 		this.visivel = visivel;
-		this.setForma("~~~|");
+		this.setForma("~~~~|");
 		if (this.isAtingido()) {
 			if (visivel) {
-				this.setForma("~0~|");
+				this.setForma("~§§~|");
 			}else{
-				this.setForma("~~~|");				
+				this.setForma("~~~~|");				
 			}
 		}
 	}

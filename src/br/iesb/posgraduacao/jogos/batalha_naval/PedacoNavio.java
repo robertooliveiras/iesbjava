@@ -1,7 +1,7 @@
 package br.iesb.posgraduacao.jogos.batalha_naval;
 
 public abstract class PedacoNavio implements InterfacePeca{
-	private String forma = "~~~|";
+	private String forma = "~~~~|";
 	protected boolean visivel = false;
 	private boolean atingido = false;
 	private char linha;
@@ -30,6 +30,7 @@ public abstract class PedacoNavio implements InterfacePeca{
 	public char getColuna() {
 		return coluna;
 	}
+	
 	public void setLinha(char linha) {
 		this.linha = linha;
 	}
@@ -51,8 +52,4 @@ public abstract class PedacoNavio implements InterfacePeca{
 		this.setColuna(posicao[1]);
 	}
 	
-//	public void setPosicaoPorIndice(int[] posicao) {
-//		this.setLinha(posicao[0]);
-//		this.setColuna(posicao[1]);
-//	}
 }
