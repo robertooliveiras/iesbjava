@@ -32,6 +32,16 @@ public class CampoBatalha{
 	public CampoBatalha() {
 		initCampo();
 		posicionaPortaAvioesAleatoriamente();
+		for (int i = 0; i < 4; i++) {
+			posicionaNavioGuerraAleatoriamente(1);
+		}
+		for (int i = 0; i < 3; i++) {
+			posicionaNavioGuerraAleatoriamente(2);
+		}
+		for (int i = 0; i < 2; i++) {
+			posicionaNavioGuerraAleatoriamente(3);
+		}
+		posicionaNavioGuerraAleatoriamente(4);
 	}
 	
 	/**
@@ -72,16 +82,13 @@ public class CampoBatalha{
 		int direcao; // 0 = direita(v) ou cima(h); 1 = esquerda(v) ou baixo(h)
 		boolean posicaoPAok = false;
 		while(!posicaoPAok){
-			if( t > 4 ){
-				continue;
-			}
 			posicaoInicial = getRandomicCellChar();
 			eixo = getPositiveRandomNumber(2, this.rnd); // 0 = horizontal; 1 = vertical
 			System.out.println(posicaoInicial[0] + "" + posicaoInicial[1] + " " + eixo);
 			if(validaPosicaoInicialNG(posicaoInicial, eixo, t)){
 				indexPosicaoInicial[0] = getIndexOfLinhasChar(posicaoInicial[0]);
 				indexPosicaoInicial[1] = getIndexOfColunasChar(posicaoInicial[1]);
-				posicaoPAok = validaDisponibilidadePosicaoPA(indexPosicaoInicial, eixo, t);
+				posicaoPAok = validaDisponibilidadePosicaoNG(indexPosicaoInicial, eixo, t);
 				if(posicaoPAok){
 					posicionaNavioGuerra(indexPosicaoInicial, eixo, t);
 				}
@@ -126,37 +133,17 @@ public class CampoBatalha{
 			png.setTPeca(mpng);
 			pecasNavioGuerra.add(png);
 		}
-		for (int i = 0; i < pecasNavioGuerra.size(); i++) {
-			this.campoDeBatalha[p[0]][p[1]] = pecasNavioGuerra.get(0);//posicao inicial
+		int l = p[0];
+		int c = p[1];
+		if(e == 0){//horizontal => direçao direita
+			for (int i = 0; i < t; i++) {
+				this.campoDeBatalha[l][c++] = pecasNavioGuerra.get(i);//posicao inicial
+			}
+		}else{//vertical => direçao baixo
+			for (int i = 0; i < t; i++) {
+				this.campoDeBatalha[l++][c] = pecasNavioGuerra.get(i);//posicao inicial
+			}
 		}
-		
-		
-//		
-//		if(e == 0){//horizontal => direçao será baixo(0)=T ou cima(1)=T invertido
-//			if(d == 0){
-//				this.campoDeBatalha[p[0]+1][p[1]] = pecasPortaAvioes.get(1);
-//				this.campoDeBatalha[p[0]+2][p[1]] = pecasPortaAvioes.get(2);
-//				this.campoDeBatalha[p[0]][p[1]-1] = pecasPortaAvioes.get(3);
-//				this.campoDeBatalha[p[0]][p[1]+1] = pecasPortaAvioes.get(4);
-//			}else{
-//				this.campoDeBatalha[p[0]-1][p[1]] = pecasPortaAvioes.get(1);
-//				this.campoDeBatalha[p[0]-2][p[1]] = pecasPortaAvioes.get(2);
-//				this.campoDeBatalha[p[0]][p[1]-1] = pecasPortaAvioes.get(3);
-//				this.campoDeBatalha[p[0]][p[1]+1] = pecasPortaAvioes.get(4);
-//			}
-//		}else{//vertical => direçao será direita(0)H sem aste direita ou esquerda(1) H sem aste esquerda
-//			if(d == 0){
-//				this.campoDeBatalha[p[0]-1][p[1]] = pecasPortaAvioes.get(1);
-//				this.campoDeBatalha[p[0]+1][p[1]] = pecasPortaAvioes.get(2);
-//				this.campoDeBatalha[p[0]][p[1]+1] = pecasPortaAvioes.get(3);
-//				this.campoDeBatalha[p[0]][p[1]+2] = pecasPortaAvioes.get(4);
-//			}else{
-//				this.campoDeBatalha[p[0]-1][p[1]] = pecasPortaAvioes.get(1);
-//				this.campoDeBatalha[p[0]+1][p[1]] = pecasPortaAvioes.get(2);
-//				this.campoDeBatalha[p[0]][p[1]-1] = pecasPortaAvioes.get(3);
-//				this.campoDeBatalha[p[0]][p[1]-2] = pecasPortaAvioes.get(4);
-//			}
-//		}
 	}
 	public void posicionaPortaAvioes(int[] p, int e, int d){
 		PedacoPortaAvioes mppa;
@@ -200,17 +187,23 @@ public class CampoBatalha{
 		}
 	}
 	public boolean validaDisponibilidadePosicaoNG(int[] p, int e, int t){
+		int l = p[0];
+		int c = p[1];
 		if(e == 0){//horizontal => direçao direita
-			int l = p[0];
-			int c = p[1];
 			for (int i = 0; i < t; i++) {
-				if(!(this.campoDeBatalha[p[0]][p[1]++].getTPeca() instanceof Agua)){
+				if(c > this.colunas.length -1){
+					return false;
+				}
+				if(!(this.campoDeBatalha[l][c++].getTPeca() instanceof Agua)){
 					return false;
 				}
 			}
 		}else{//vertical => direçao baixo
 			for (int i = 0; i < t; i++) {
-				if(!(this.campoDeBatalha[p[0]++][p[1]].getTPeca() instanceof Agua)){
+				if(l > this.linhas.length -1){
+					return false;
+				}
+				if(!(this.campoDeBatalha[l++][c].getTPeca() instanceof Agua)){
 					return false;
 				}
 			}
