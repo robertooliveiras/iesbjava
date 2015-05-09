@@ -17,6 +17,11 @@ import java.util.Random;
  *
  */
 public class CampoBatalha {
+	public List<String> posicoesValidas = new ArrayList<String>();
+	public List<String> tiposNaviosValidos = new ArrayList<String>();
+	public List<String> eixosValidas = new ArrayList<String>();
+	public List<String> direcoesValidas = new ArrayList<String>();
+	public List<String> tamanhosValidos = new ArrayList<String>();
 	public String[] linhas = {"A","B","C","D","E","F","G","H","I","J"};
 	public String[] colunas = {"1","2","3","4","5","6","7","8","9","10"};
 	public Character[] linhasChar = {'A','B','C','D','E','F','G','H','I','J'};
@@ -81,6 +86,11 @@ public class CampoBatalha {
 				posicionaNavioGuerraAleatoriamente(3);
 			}
 			posicionaNavioGuerraAleatoriamente(4);
+		}else{
+			boolean posicionamentoManualOk = false;
+			do{
+				posicionamentoManualOk = true;
+			}while(!posicionamentoManualOk);
 		}
 	}
 	
@@ -106,6 +116,28 @@ public class CampoBatalha {
 				campoDeBatalha[i][j] = pt;
 			}
 		}
+		
+		tiposNaviosValidos.add("P");
+		tiposNaviosValidos.add("G");
+		
+		posicoesValidas.add("A1");
+		//até
+		posicoesValidas.add("J10");
+		
+		eixosValidas.add("V");
+		eixosValidas.add("H");
+		
+		direcoesValidas = new ArrayList<String>();
+		
+		direcoesValidas.add("D"); //direita
+		direcoesValidas.add("E"); //esquerda
+		direcoesValidas.add("C"); //cima
+		direcoesValidas.add("B"); //baixo
+		
+		tamanhosValidos.add("1");
+		tamanhosValidos.add("2");
+		tamanhosValidos.add("3");
+		tamanhosValidos.add("4");
 	}
 	
 	/*
@@ -257,7 +289,6 @@ public class CampoBatalha {
 			for (int i = 0; i < t; i++) {
 				if(c>9) return false;
 				if(l-1 >= 0) {
-					System.out.println(c);
 					if(!(this.campoDeBatalha[l-1][c].getTPeca() instanceof Agua)) {
 						return false;
 					}

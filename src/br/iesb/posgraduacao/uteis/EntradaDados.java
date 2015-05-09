@@ -25,12 +25,6 @@ public class EntradaDados {
 				matriz[x][y] = new Tabuleiro();
 			}			 
 		}
-		
-		//gera lista de linhas e colunas válidas
-		for (int i = 0; i < tamanho; i++) {
-			linhaValida.add(alfabeto[i].toString());
-			colunaValida.add(inteiros[i].toString());
-		}
 	}
 
 	public static void main(String[] args) {
@@ -78,6 +72,12 @@ public class EntradaDados {
 		//valida o local dos espaços digitados
 		if( a[1] != ' ' || a[b2] != ' '){
 			return false;
+		}
+		
+		//gera lista de linhas e colunas válidas
+		for (int i = 0; i < tamanho; i++) {
+			linhaValida.add(alfabeto[i].toString());
+			colunaValida.add(inteiros[i].toString());
 		}
 		
 		
