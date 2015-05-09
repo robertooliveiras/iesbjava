@@ -25,6 +25,12 @@ public class EntradaDados {
 				matriz[x][y] = new Tabuleiro();
 			}			 
 		}
+		
+		//gera lista de linhas e colunas válidas
+		for (int i = 0; i < tamanho; i++) {
+			linhaValida.add(alfabeto[i].toString());
+			colunaValida.add(inteiros[i].toString());
+		}
 	}
 
 	public static void main(String[] args) {
@@ -74,11 +80,6 @@ public class EntradaDados {
 			return false;
 		}
 		
-		//gera lista de linhas e colunas válidas
-		for (int i = 0; i < tamanho; i++) {
-			linhaValida.add(alfabeto[i].toString());
-			colunaValida.add(inteiros[i].toString());
-		}
 		
 		//inicializa variáveis de verificação
 		boolean valida = false;
@@ -87,6 +88,7 @@ public class EntradaDados {
 		boolean validaColuna = false;
 		boolean validaOrientacao = false;
 		boolean validaPosicao = false;
+		
 		
 		//valida tipo de navio
 		for (int i = 0; i < navioValido.length; i++) {

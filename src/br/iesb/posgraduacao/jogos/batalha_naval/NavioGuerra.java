@@ -18,9 +18,9 @@ public class NavioGuerra extends Navio {
 	 */
 	private char[] posicaoInicio = new char[2];
 	/**
-	 * Determina a posição no 
-	 * V = Vertical ou 
-	 * H = Horizontal
+	 * Determina a posição no eixo 
+	 * V = Vertical = 0
+	 * H = Horizontal = 1
 	 */
 	private char orientacao = 'V';
 	
@@ -29,11 +29,7 @@ public class NavioGuerra extends Navio {
 	}
 	
 	public void setQtCanos(int tamanho) {
-		if(tamanho >= 1 && tamanho <= 4){
 			this.qtCanos = tamanho;
-		}else{
-			throw new Error("Tamanho informado do Navio de Guerra inválido.");
-		}
 	}
 	
 	public char[] getPosicaoInicio() {
@@ -43,6 +39,11 @@ public class NavioGuerra extends Navio {
 	public void setPosicaoInicio(char[] posicaoInicio) {
 			this.posicaoInicio = posicaoInicio;
 	}
+	
+	public void setPosicaoInicio(int[] posicaoInicio) {
+			this.posicaoInicio[0] = linhasChar[posicaoInicio[0]];
+			this.posicaoInicio[1] = colunasChar[posicaoInicio[1]];
+	}
 
 	public char getOrientacao() {
 		return orientacao;
@@ -51,6 +52,16 @@ public class NavioGuerra extends Navio {
 	public void setOrientacao(char orientacao) {
 		this.orientacao = orientacao;
 	}
+
+	public void setOrientacao(int orientacao) {
+		if(orientacao == 0){
+			this.orientacao = 'H';
+		}else if(orientacao == 1){
+			this.orientacao = 'V';
+		}
+		
+	}
+
 	
 	public ArrayList<PedacoNavioGuerra> getPedacosNavioGuerra() {
 			return pedacosNavioGuerra;

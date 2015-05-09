@@ -3,55 +3,61 @@ package br.iesb.posgraduacao.jogos.batalha_naval;
 import java.util.ArrayList;
 
 public class PortaAvioes extends NavioGuerra {
+//	/**
+//	 * Eixo do Porta Aviões determina se é
+//	 * 0 = Horizontal (H)
+//	 * 1 = Vertical (V)
+//	 */
+//	private int eixo;
 	/**
 	 * Direção do Porta Aviões determina se é
-	 * D = Direita
-	 * E = Esqueda
-	 * C = Cima
-	 * B = Baixo 
+	 * SE EIXO FOR HORIZONTAL (H)
+	 *    0 = para baixo (forma de T) 
+	 *    1 = para cima  (forma de T invertido)
+	 * SE EIXO FOR VERTICAL (V)
+	 *    0 = para direita  (forma de H sem aste direita) 
+	 *    1 = para esquerda (forma de H sem aste esquerda)
 	 */
-	private char direcao;
-	private ArrayList<Character> direcoesValidas;
-	private String[] linhas = {"A","B","C","D","E","F","G","H","I","J"};
-	private ArrayList<PedacoPortaAvioes> pedacosPortaAvioes;
+	private int direcao;
+	private ArrayList<Integer> eixosValidos = new ArrayList<Integer>();
+	private ArrayList<Integer> direcoesValidas = new ArrayList<Integer>();
+	private ArrayList<PedacoPortaAvioes> pedacosPortaAvioes = new ArrayList<PedacoPortaAvioes>();
 
 	public PortaAvioes() {
-		direcoesValidas.add('D');
-		direcoesValidas.add('E');
-		direcoesValidas.add('C');
-		direcoesValidas.add('B');
+		eixosValidos.clear();
+		direcoesValidas.clear();
+		
+		eixosValidos.add(0);
+		eixosValidos.add(1);
+
+		direcoesValidas.add(0);
+		direcoesValidas.add(1);
 	}
 
-	public char getDirecao() {
-		return direcao;
+	public int getDirecao() {
+		return this.direcao;
 	}
 
-	public void setDirecao(char direcao) {
-		if(direcoesValidas.indexOf(direcao) > 0){
-			this.direcao = direcao;
+	public char getDirecaoChar() {
+		if(this.direcao == 0){
+			return 'H';
+		}else if(this.direcao == 1){
+			return 'V';
 		}else{
-			throw new Error("E002 direção do Porta Aviões inválida");
+			return 'S'; //sem direçao configurada
 		}
+	}
+
+	public void setDirecao(int direcao) {
+		this.direcao = direcao;
 	}
 	
-	public void setPosicaoInicio(Character[] posicaoInicio, Integer tamanhoMatriz) {
-		if (posicaoInicio.length == 2){
-			if(tamanhoMatriz <= linhas.length){
-				if(posicaoInicio[0].toString()+posicaoInicio[1].toString() != "A1" 
-						&& posicaoInicio[0].toString()+posicaoInicio[1].toString() != "A"+tamanhoMatriz.toString()
-						&& posicaoInicio[0].toString()+posicaoInicio[1].toString() != linhas[tamanhoMatriz]+"1"
-						&& posicaoInicio[0].toString()+posicaoInicio[1].toString() != linhas[tamanhoMatriz]+tamanhoMatriz.toString()){
-					char[] pinicial = {posicaoInicio[0],posicaoInicio[1]};
-					super.setPosicaoInicio(pinicial);
-				}else{
-					throw new Error("Porta Avioes não pode ter posição inicial nos cantos da matriz.");
-				}
-			}else{
-				throw new Error("Posição inicial maior que permitido na matriz.");
-			}
-		}else{
-			throw new Error("Necessário informar linha e coluna da posição inicial.");
-		}
+	public void setPosicaoInicio(char[] posicaoInicio) {
+			super.setPosicaoInicio(posicaoInicio);
+	}
+	
+	public void setPosicaoInicio(int[] posicaoInicio) {
+			super.setPosicaoInicio(posicaoInicio);
 	}
 
 	public ArrayList<PedacoPortaAvioes> getPedacosPortaAvioes() {
@@ -68,12 +74,7 @@ public class PortaAvioes extends NavioGuerra {
 	}
 
 	public void addPedacoPortaAvioes(PedacoPortaAvioes pedacoPortaAvioes) {
-		if(this.getTipo() == 'P'){
-			this.pedacosPortaAvioes.add(pedacoPortaAvioes);
-		}else{
-			//throw new Error("Não é possível adicionar pedaços de Navio de Guerra no Porta Aviões");
-		}
-		
+		this.pedacosPortaAvioes.add(pedacoPortaAvioes);
 	}
 
 }
