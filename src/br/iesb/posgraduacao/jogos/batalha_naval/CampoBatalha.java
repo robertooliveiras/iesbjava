@@ -120,9 +120,13 @@ public class CampoBatalha {
 		tiposNaviosValidos.add("P");
 		tiposNaviosValidos.add("G");
 		
-		posicoesValidas.add("A1");
+		char j='A';
+		Integer c = 1;
+		for (char i = 'a'; i <= 'j'; i++) {
+			posicoesValidas.add(""+i+""+c.toString());
+			posicoesValidas.add(j++ +""+c++);
+		}
 		//até
-		posicoesValidas.add("J10");
 		
 		eixosValidas.add("V");
 		eixosValidas.add("H");
