@@ -1,11 +1,14 @@
 /**
- * 
+ * @author RobertoOliveira
+ * @since 2015/05/04
+ * Batalha Naval com Porta Avioes em "T" + Navios de Guerra com 1 a 4 canos
  */
 package br.iesb.posgraduacao.jogos.batalha_naval;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 /*** 
  * @author RobertoOliveira
@@ -17,11 +20,8 @@ import java.util.Random;
  *
  */
 public class CampoBatalha {
-	public List<String> posicoesValidas = new ArrayList<String>();
-	public List<String> tiposNaviosValidos = new ArrayList<String>();
-	public List<String> eixosValidas = new ArrayList<String>();
-	public List<String> direcoesValidas = new ArrayList<String>();
-	public List<String> tamanhosValidos = new ArrayList<String>();
+	public List<String> posicoesNavioGuerraValidas = new ArrayList<String>();
+	public List<String> posicoesPortaAvioesValidas = new ArrayList<String>();
 	public String[] linhas = {"A","B","C","D","E","F","G","H","I","J"};
 	public String[] colunas = {"1","2","3","4","5","6","7","8","9","10"};
 	public Character[] linhasChar = {'A','B','C','D','E','F','G','H','I','J'};
@@ -31,34 +31,8 @@ public class CampoBatalha {
 //	public ArrayList<ArrayList<Peca>> frota = new ArrayList<ArrayList<Peca>>();
 	public Random rnd = new Random(System.currentTimeMillis());
 	@SuppressWarnings("rawtypes")
-	public Peca[][] campoDeBatalha;
-	
-	public static void main(String[] args) {
-		
-		CampoBatalha cb = new CampoBatalha(true);
-		cb.imprimeCampoDeBatalha();
-		System.out.println("\n");
-		
-//		Ataque do jogador
-//		String a = "C7";
-//		int L = cb.getIndexOfLinhasChar(a.charAt(0));
-//		int C = cb.getIndexOfColunasChar(a.charAt(1));
-//		System.out.println(L);
-//		System.out.println(C);
-//		cb.campo[L][C].getTPeca().setAtingido(true);
-//		System.out.println(cb.campo[L][C].getTPeca().getForma());
-
-//		Ataque do computador
-		char[] cell;		
-		cell = cb.getRandomicCellChar();
-		cb.getPecaCampoBatalhaByPositionChar(cell).getTPeca().setAtingido(true);
-		
-
-		cb.imprimeCampoDeBatalha();
-		System.out.println("\n");
-		
-		System.exit(0);
-	}
+	private Peca[][] campoDeBatalha;
+	protected Scanner entrada = new Scanner(System.in);
 	
 	@SuppressWarnings("rawtypes")
 	public Peca getPecaCampoBatalhaByPositionChar(char[] p) {
@@ -68,13 +42,23 @@ public class CampoBatalha {
 		return this.campoDeBatalha[i[0]][i[1]];
 	}
 	
+	public Peca[][] getCampoDeBatalha(){
+		return this.campoDeBatalha;
+	}
+	
 	/**
 	 * Construtor da classe que chama o metodo initCampo para 
 	 * criar o campo de batalha (grelha) com objetos Agua
 	 */
-	public CampoBatalha(boolean posicionarAleatoriamente) {
+	public CampoBatalha(boolean aleatoriamente) {
 		initCampo();
-		if(posicionarAleatoriamente) {
+		initValidadoresDeEntrada();
+		posicionarFrota(aleatoriamente);
+	}
+	
+	public void posicionarFrota(boolean aleatoriamente) {
+
+		if(aleatoriamente) {
 			posicionaPortaAvioesAleatoriamente();
 			for (int i = 0; i < 4; i++) {
 				posicionaNavioGuerraAleatoriamente(1);
@@ -87,10 +71,123 @@ public class CampoBatalha {
 			}
 			posicionaNavioGuerraAleatoriamente(4);
 		}else{
-			boolean posicionamentoManualOk = false;
-			do{
-				posicionamentoManualOk = true;
-			}while(!posicionamentoManualOk);
+			boolean posicionamentoManualOk;
+			String e;
+			
+			int tentativas = 0;
+			for (int i = 0; i < 1; i++) {
+				posicionamentoManualOk = false;
+				do{
+					if(tentativas == 0){
+						System.out.println("informe a posição do Porta Aviões P1 ("+(i+1)+"/1):");
+					}else{
+						System.out.println("Atenção! Opção inválida.\n"
+								+ "informe a posição do Porta Aviões P1 ("+(i+1)+"/1):");
+					}
+					e = entrada.nextLine();
+					while(posicoesPortaAvioesValidas.indexOf(e) < 0){
+						System.out.println("Atenção! Opção inválida.\n"
+											+ "informe a posição do Porta Aviões P1 ("+(i+1)+"/1):");
+						e = entrada.nextLine();
+					}
+					posicionamentoManualOk = posicionaPortaAvioesManualmente(e);
+					tentativas++;
+				}while(!posicionamentoManualOk);
+				imprimeCampoDeBatalha();
+				tentativas = 0;
+			}
+			
+			tentativas = 0;
+			for (int i = 0; i < 4; i++) {
+				posicionamentoManualOk = false;
+				do{
+					if(tentativas == 0){
+						System.out.println("informe a posição Navio de Guerra de 1 cano N1 ("+(i+1)+"/4):");
+					}else{
+						System.out.println("Atenção! Opção inválida.\n"
+								+ "informe a posição Navio de Guerra de 1 cano N1 ("+(i+1)+"/4):");
+					}
+					e = entrada.nextLine();
+					while(posicoesNavioGuerraValidas.indexOf(e) < 0){
+						System.out.println("Atenção! Opção inválida.\n"
+											+ "informe a posição Navio de Guerra de 1 cano N1 ("+(i+1)+"/4):");
+						e = entrada.nextLine();
+					}
+					posicionamentoManualOk = posicionaNavioGuerraManualmente(1, e);
+					tentativas++;
+				}while(!posicionamentoManualOk);
+				imprimeCampoDeBatalha();
+				tentativas = 0;
+			}
+
+			tentativas = 0;
+			for (int i = 0; i < 3; i++) {
+				posicionamentoManualOk = false;
+				do{
+					if(tentativas == 0){
+						System.out.println("informe a posição Navio de Guerra de 2 cano N2 ("+(i+1)+"/3):");
+					}else{
+						System.out.println("Atenção! Opção inválida.\n"
+								+ "informe a posição Navio de Guerra de 2 cano N2 ("+(i+1)+"/3):");
+					}
+					e = entrada.nextLine();
+					while(posicoesNavioGuerraValidas.indexOf(e) < 0){
+						System.out.println("Atenção! Opção inválida.\n"
+											+ "informe a posição Navio de Guerra de 2 cano N2 ("+(i+1)+"/3):");
+						e = entrada.nextLine();
+					}
+					posicionamentoManualOk = posicionaNavioGuerraManualmente(2, e);
+					tentativas++;
+				}while(!posicionamentoManualOk);
+				imprimeCampoDeBatalha();
+				tentativas = 0;
+			}
+
+			tentativas = 0;
+			for (int i = 0; i < 2; i++) {
+				posicionamentoManualOk = false;
+				do{
+					if(tentativas == 0){
+						System.out.println("informe a posição Navio de Guerra de 3 cano N3 ("+(i+1)+"/2):");
+					}else{
+						System.out.println("Atenção! Opção inválida.\n"
+								+ "informe a posição Navio de Guerra de 3 cano N3 ("+(i+1)+"/2):");
+					}
+					e = entrada.nextLine();
+					while(posicoesNavioGuerraValidas.indexOf(e) < 0){
+						System.out.println("Atenção! Opção inválida.\n"
+											+ "informe a posição Navio de Guerra de 3 cano N3 ("+(i+1)+"/2):");
+						e = entrada.nextLine();
+					}
+					posicionamentoManualOk = posicionaNavioGuerraManualmente(3, e);
+					tentativas++;
+				}while(!posicionamentoManualOk);
+				imprimeCampoDeBatalha();
+				tentativas = 0;
+			}
+
+			tentativas = 0;
+			for (int i = 0; i < 1; i++) {
+				posicionamentoManualOk = false;
+				do{
+					if(tentativas == 0){
+						System.out.println("informe a posição Navio de Guerra de 4 cano N4 ("+(i+1)+"/1):");
+					}else{
+						System.out.println("Atenção! Opção inválida.\n"
+								+ "informe a posição Navio de Guerra de 4 cano N4 ("+(i+1)+"/1):");
+					}
+					e = entrada.nextLine();
+					while(posicoesNavioGuerraValidas.indexOf(e) < 0){
+						System.out.println("Atenção! Opção inválida.\n"
+											+ "informe a posição Navio de Guerra de 4 cano N4 ("+(i+1)+"/1):");
+						e = entrada.nextLine();
+					}
+					posicionamentoManualOk = posicionaNavioGuerraManualmente(4, e);
+					tentativas++;
+				}while(!posicionamentoManualOk);
+				imprimeCampoDeBatalha();
+				tentativas = 0;
+			}
 		}
 	}
 	
@@ -116,32 +213,40 @@ public class CampoBatalha {
 				campoDeBatalha[i][j] = pt;
 			}
 		}
+	}
+	
+	private void initValidadoresDeEntrada() {
 		
-		tiposNaviosValidos.add("P");
-		tiposNaviosValidos.add("G");
-		
-		char j='A';
-		Integer c = 1;
-		for (char i = 'a'; i <= 'j'; i++) {
-			posicoesValidas.add(""+i+""+c.toString());
-			posicoesValidas.add(j++ +""+c++);
+		for (char i = 'a', j='A'; i <= 'j'; i++, j++) {
+			for (Integer c = 1; c <= 10; c++) {
+				posicoesNavioGuerraValidas.add(""+i+""+c.toString()+" v");
+				posicoesNavioGuerraValidas.add(""+i+""+c.toString()+" V");
+				posicoesNavioGuerraValidas.add(""+i+""+c.toString()+" h");
+				posicoesNavioGuerraValidas.add(""+i+""+c.toString()+" H");
+				posicoesNavioGuerraValidas.add(j +""+c.toString()+" v");
+				posicoesNavioGuerraValidas.add(j +""+c.toString()+" V");
+				posicoesNavioGuerraValidas.add(j +""+c.toString()+" h");
+				posicoesNavioGuerraValidas.add(j +""+c.toString()+" H");
+				
+
+				posicoesPortaAvioesValidas.add(""+i+""+c.toString()+" v d");
+				posicoesPortaAvioesValidas.add(""+i+""+c.toString()+" v e");
+				posicoesPortaAvioesValidas.add(""+i+""+c.toString()+" V D");
+				posicoesPortaAvioesValidas.add(""+i+""+c.toString()+" V E");
+				posicoesPortaAvioesValidas.add(""+i+""+c.toString()+" h c");
+				posicoesPortaAvioesValidas.add(""+i+""+c.toString()+" h b");
+				posicoesPortaAvioesValidas.add(""+i+""+c.toString()+" H C");
+				posicoesPortaAvioesValidas.add(""+i+""+c.toString()+" H B");
+				posicoesPortaAvioesValidas.add(j +""+c.toString()+" v d");
+				posicoesPortaAvioesValidas.add(j +""+c.toString()+" v e");
+				posicoesPortaAvioesValidas.add(j +""+c.toString()+" V D");
+				posicoesPortaAvioesValidas.add(j +""+c.toString()+" V E");
+				posicoesPortaAvioesValidas.add(j +""+c.toString()+" h c");
+				posicoesPortaAvioesValidas.add(j +""+c.toString()+" h b");
+				posicoesPortaAvioesValidas.add(j +""+c.toString()+" H C");
+				posicoesPortaAvioesValidas.add(j +""+c.toString()+" H B");
+			}
 		}
-		//até
-		
-		eixosValidas.add("V");
-		eixosValidas.add("H");
-		
-		direcoesValidas = new ArrayList<String>();
-		
-		direcoesValidas.add("D"); //direita
-		direcoesValidas.add("E"); //esquerda
-		direcoesValidas.add("C"); //cima
-		direcoesValidas.add("B"); //baixo
-		
-		tamanhosValidos.add("1");
-		tamanhosValidos.add("2");
-		tamanhosValidos.add("3");
-		tamanhosValidos.add("4");
 	}
 	
 	/*
@@ -159,16 +264,48 @@ public class CampoBatalha {
 		while(!posicaoPAok) {
 			posicaoInicial = getRandomicCellChar();
 			eixo = getPositiveRandomNumber(2, this.rnd); // 0 = horizontal; 1 = vertical
-//			System.out.println(posicaoInicial[0] + "" + posicaoInicial[1] + " " + eixo);
 			if(validaPosicaoInicialNG(posicaoInicial, eixo, t)) {
 				indexPosicaoInicial[0] = getIndexOfLinhasChar(posicaoInicial[0]);
 				indexPosicaoInicial[1] = getIndexOfColunasChar(posicaoInicial[1]);
-				posicaoPAok = validaDisponibilidadePosicaoNG(indexPosicaoInicial, eixo, t);
+				posicaoPAok = validaDisponibilidadePosicaoNG(indexPosicaoInicial, eixo, t, true);
 				if(posicaoPAok) {
 					posicionaNavioGuerra(indexPosicaoInicial, eixo, t);
 				}
 			}
 		}
+	}
+
+	private boolean posicionaNavioGuerraManualmente(int t, String posicao) {
+		char[] p = new char[5];
+		//ex.: a1 v    ou    j10 h
+		p = posicao.toUpperCase().toCharArray();
+		
+		char[] posicaoInicial = new char[2];
+		posicaoInicial[0] = p[0];
+		if (posicao.length() == 4) {
+			posicaoInicial[1] = p[1];
+		}else{
+			posicaoInicial[1] = p[2];
+		}
+		int[] indexPosicaoInicial = new int[2];
+		indexPosicaoInicial[0] = getIndexOfLinhasChar(posicaoInicial[0]);
+		indexPosicaoInicial[1] = getIndexOfColunasChar(posicaoInicial[1]);
+		
+		int eixo; // 0 = horizontal; 1 = vertical		
+		if(p[posicao.length()-1] == 'h' || p[posicao.length()-1] == 'H'){
+			eixo = 0; //horizontal
+		}else{
+			eixo = 1; //vertical
+		}
+
+		if(!validaPosicaoInicialNG(posicaoInicial, eixo, t)) {
+			return false;
+		}
+		if(!validaDisponibilidadePosicaoNG(indexPosicaoInicial, eixo, t, false)){
+			return false;
+		}
+		posicionaNavioGuerra(indexPosicaoInicial, eixo, t);
+		return true;
 	}
 	
 	/**
@@ -196,6 +333,48 @@ public class CampoBatalha {
 			}
 		}
 	}
+	
+	private boolean posicionaPortaAvioesManualmente(String posicao) {
+		char[] p = new char[5];
+		//ex.: a1 v d    ou    j10 h b
+		p = posicao.toUpperCase().toCharArray();
+
+		char[] posicaoInicial = new char[2];
+		posicaoInicial[0] = p[0];
+		if (posicao.length() == 6) {
+			posicaoInicial[1] = p[1];
+		}else{
+			posicaoInicial[1] = p[2];
+		}
+		int[] indexPosicaoInicial = new int[2];
+		indexPosicaoInicial[0] = getIndexOfLinhasChar(posicaoInicial[0]);
+		indexPosicaoInicial[1] = getIndexOfColunasChar(posicaoInicial[1]);
+		
+		int eixo; // 0 = horizontal; 1 = vertical		
+		if(p[posicao.length()-3] == 'h' || p[posicao.length()-3] == 'H'){
+			eixo = 0; //horizontal
+		}else{
+			eixo = 1; //vertical
+		}
+		
+		int direcao; // 0 = horizontal; 1 = vertical		
+		if(p[posicao.length()-1] == 'd' || p[posicao.length()-1] == 'D'
+			|| p[posicao.length()-1] == 'c' || p[posicao.length()-1] == 'C'){
+			direcao = 0; //Direita ou Cima (direções equivalentes a 0 para eixo horizontal ou vertical )
+		}else{
+			direcao = 1; //Esquerd ou Baixo
+		}
+
+		if(!validaPosicaoInicialPA(posicaoInicial, eixo, direcao)) {
+			return false;
+		}
+		if(!validaDisponibilidadePosicaoPA(indexPosicaoInicial, eixo, direcao)){
+			return false;
+		}
+		posicionaPortaAvioes(indexPosicaoInicial, eixo, direcao);
+		return true;
+	}
+	
 	public void posicionaNavioGuerra(int[] p, int e, Integer t) {
 		PedacoNavioGuerra mpng;
 		Peca<PedacoNavioGuerra> png;
@@ -227,6 +406,7 @@ public class CampoBatalha {
 		}
 		this.naviosGuerra.add(ng);
 	}
+	
 	public void posicionaPortaAvioes(int[] p, int e, int d) {
 		PedacoPortaAvioes mppa;
 		Peca<PedacoPortaAvioes> ppa;
@@ -281,23 +461,24 @@ public class CampoBatalha {
 		this.portaAvioes.add(pa);
 		
 	}
-	public boolean validaDisponibilidadePosicaoNG(int[] p, int e, int t) {
+	
+	public boolean validaDisponibilidadePosicaoNG(int[] p, int e, int t, boolean espalhado) {
 		int l = p[0];
 		int c = p[1];
 		if(e == 0) {//horizontal => direçao direita
-			if(c-1 >= 0) {
+			if(c-1 >= 0 && espalhado) {
 				if(!(this.campoDeBatalha[l][c-1].getTPeca() instanceof Agua)) {
 					return false;
 				}
 			}
 			for (int i = 0; i < t; i++) {
 				if(c>9) return false;
-				if(l-1 >= 0) {
+				if(l-1 >= 0 && espalhado) {
 					if(!(this.campoDeBatalha[l-1][c].getTPeca() instanceof Agua)) {
 						return false;
 					}
 				}
-				if(l+1 < linhas.length) {
+				if(l+1 < linhas.length && espalhado) {
 					if(!(this.campoDeBatalha[l+1][c].getTPeca() instanceof Agua)) {
 						return false;
 					}
@@ -307,7 +488,7 @@ public class CampoBatalha {
 				}
 				
 			}
-			if(c < colunas.length) {
+			if(c < colunas.length && espalhado) {
 				if(!(this.campoDeBatalha[l][c].getTPeca() instanceof Agua)) {
 					return false;
 				}
@@ -315,18 +496,18 @@ public class CampoBatalha {
 			
 		} else {//vertical => direçao baixo
 
-			if(l-1 >= 0) {
+			if(l-1 >= 0 && espalhado) {
 				if(!(this.campoDeBatalha[l-1][c].getTPeca() instanceof Agua)) {
 					return false;
 				}
 			}
 			for (int i = 0; i < t; i++) {
-				if(c-1 >= 0) {
+				if(c-1 >= 0 && espalhado) {
 					if(!(this.campoDeBatalha[l][c-1].getTPeca() instanceof Agua)) {
 						return false;
 					}
 				}
-				if(c+1 < colunas.length) {
+				if(c+1 < colunas.length && espalhado) {
 					if(!(this.campoDeBatalha[l][c+1].getTPeca() instanceof Agua)) {
 						return false;
 					}
@@ -335,7 +516,7 @@ public class CampoBatalha {
 					return false;
 				}
 			}
-			if(l < linhas.length) {
+			if(l < linhas.length && espalhado) {
 				if(!(this.campoDeBatalha[l][c].getTPeca() instanceof Agua)) {
 					return false;
 				}
@@ -343,6 +524,7 @@ public class CampoBatalha {
 		}
 		return true;
 	}
+	
 	public boolean validaDisponibilidadePosicaoPA(int[] p, int e, int d) {
 		if(!(this.campoDeBatalha[p[0]][p[1]].getTPeca() instanceof Agua)) {
 			return false;
@@ -532,32 +714,6 @@ public class CampoBatalha {
 		return index;
 	}	
 
-//	public void criarNaviosGuerra(int qtNavios, int qtCanos, char orientacao) {
-//		char col = '0';
-//		char[] posicaoInicio = {'A','1'};
-//		for (Integer i = 0; i < qtNavios; i++) {
-//			this.naviosGuerra.add(new NavioGuerra());
-//		}
-//		for (int i = 0; i < this.naviosGuerra.size(); i++) {
-//			this.naviosGuerra.get(i).setOrientacao(orientacao);
-//			this.naviosGuerra.get(i).setQtCanos(qtCanos);
-//			this.naviosGuerra.get(i).setTipo('G');
-//			this.naviosGuerra.get(i).setPosicaoInicio(posicaoInicio);
-//			for (int j = 0; j < qtCanos; j++) {
-//				if(orientacao == 'V') {
-//					this.naviosGuerra.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra());
-//				} else { //orientacao = H
-//					if(this.naviosGuerra.get(i).colunas[j] == "10") {
-//						col = '0';
-//					} else {
-//						col = this.naviosGuerra.get(i).colunas[j].charAt(0);
-//					}
-//					this.naviosGuerra.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra());
-//				}	
-//			}
-//		}
-//	}
-	
 	public String[] getRandomicCell() {
 		int Lr = this.getPositiveRandomNumber(10,this.rnd);
 		int Cr = this.getPositiveRandomNumber(10,this.rnd);
