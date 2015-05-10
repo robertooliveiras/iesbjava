@@ -47,6 +47,7 @@ public class Main {
 				}else{
 					System.out.println("Jogador 1 acertou um objeto da Frota do Jogador 2!");
 					if(m.verificaFrotaDestruida(cb2.getCampoDeBatalha())){
+						m.imprimeTabuleiro(cb1, cb2);
 						System.out.println("Jogador 1 destruiu a Frota do Jogador 2!");
 						System.out.println("VITÓRIA DO JOGADOR 1!!!!");
 						System.exit(0);
@@ -85,6 +86,7 @@ public class Main {
 				}else{
 					System.out.println("Jogador 2 acertou um objeto da Frota do Jogador 1!");
 					if(m.verificaFrotaDestruida(cb1.getCampoDeBatalha())){
+						m.imprimeTabuleiro(cb1, cb2);
 						System.out.println("Jogador 1 destruiu a Frota do Jogador 2!");
 						System.out.println("VITÓRIA DO JOGADOR 1!!!!");
 						System.exit(0);
