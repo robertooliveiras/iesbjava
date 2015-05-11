@@ -1,4 +1,4 @@
-package br.iesb.graduacao.ads.lp.uia3;
+package br.iesb.graduacao.ads.lp.uia3.exercicio1;
 
 import java.util.ArrayList;
 import java.util.Scanner;
