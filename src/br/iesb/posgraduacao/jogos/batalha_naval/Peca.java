@@ -12,14 +12,16 @@ public class Peca <TipoPeca extends InterfacePeca>{
 	}
 
 	/**
-	 * @param recebe um objeto do tipo genérico e preenche o atributo peca com sua instância
+	 * @param recebe um objeto do tipo genérico e preenche o atributo peca com 
+	 * sua instância
 	 */
 	public void setTPeca(TipoPeca peca) {
 		this.peca = peca;
 	}
 
 	/**
-	 * @param recebe um objeto do tipo genérico e preenche o atributo peca com sua instância
+	 * @param recebe um objeto do tipo genérico e preenche o atributo peca com 
+	 * sua instância
 	 */
 	public String getTForma() {
 		return this.peca.getForma();

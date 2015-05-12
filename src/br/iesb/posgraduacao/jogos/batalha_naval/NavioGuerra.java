@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 public class NavioGuerra extends Navio {
 	
-	ArrayList<PedacoNavioGuerra> pedacosNavioGuerra = new ArrayList<PedacoNavioGuerra>();
-	ArrayList<PedacoPortaAvioes> pedacosPortaAvioes = new ArrayList<PedacoPortaAvioes>();
+	public ArrayList<PedacoNavioGuerra> pedacosNavioGuerra = 
+			new ArrayList<PedacoNavioGuerra>();
+	public ArrayList<PedacoPortaAvioes> pedacosPortaAvioes = 
+			new ArrayList<PedacoPortaAvioes>();
 	/**
 	 * Quantidade de canos do navio 
 	 * pode ser de 1 a 4 canos
@@ -54,32 +56,29 @@ public class NavioGuerra extends Navio {
 	}
 
 	public void setOrientacao(int orientacao) {
-		if(orientacao == 0){
+		if(orientacao == 0) {
 			this.orientacao = 'H';
-		}else if(orientacao == 1){
+		} else if(orientacao == 1) {
 			this.orientacao = 'V';
 		}
 		
 	}
-
 	
 	public ArrayList<PedacoNavioGuerra> getPedacosNavioGuerra() {
 			return pedacosNavioGuerra;
 	}
 
-	public void setPedacosNavioGuerra(ArrayList<PedacoNavioGuerra> pedacosNavioGuerra) {
-		if(this.getTipo() == 'G'){
+	public void setPedacosNavioGuerra(ArrayList<PedacoNavioGuerra> 
+	                                  pedacosNavioGuerra) {
+		if(this.getTipo() == 'G') {
 			this.pedacosNavioGuerra = pedacosNavioGuerra;
-		}else{
-			throw new Error("Não é possível adicionar pedaços de Porta Aviões no Navio de Guerra");
+		} else {
+			throw new Error("Não é possível adicionar pedaços de Porta Aviões "
+					+ "no Navio de Guerra");
 		}
 	}
 
 	public void addPedacoNavioGuerra(PedacoNavioGuerra pedacoNavioGuerra) {
-		if(this.getTipo() == 'G'){
-			this.pedacosNavioGuerra.add(pedacoNavioGuerra);
-		}else{
-			//throw new Error("Não é possível adicionar pedaços de Porta Aviões no Navio de Guerra");
-		}
+		this.pedacosNavioGuerra.add(pedacoNavioGuerra);
 	}
 }

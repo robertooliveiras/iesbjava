@@ -1,6 +1,9 @@
-package br.iesb.posgraduacao.jogos.batalha_naval;
+package br.iesb.posgraduacao.uteis;
 
 import java.util.ArrayList;
+
+import br.iesb.posgraduacao.jogos.batalha_naval.NavioGuerra;
+import br.iesb.posgraduacao.jogos.batalha_naval.PedacoNavioGuerra;
 
 public class Teste {
 
@@ -97,8 +100,10 @@ public class Teste {
 	}
 	
 
-	public ArrayList<NavioGuerra> criarNaviosGuerra(int qtNavios, Integer qtCanos, char orientacao){
+	public ArrayList<NavioGuerra> criarNaviosGuerra(int qtNavios
+			, Integer qtCanos, char orientacao){
 		ArrayList<NavioGuerra> navios = new ArrayList<NavioGuerra>();
+		@SuppressWarnings("unused")
 		char col = '0';
 		char[] posicaoInicio = {'A','1'};
 		for (Integer i = 0; i < qtNavios; i++) {
@@ -111,14 +116,16 @@ public class Teste {
 			navios.get(i).setPosicaoInicio(posicaoInicio);
 			for (int j = 0; j < qtCanos; j++) {
 				if(orientacao == 'V'){
-					navios.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra(qtCanos.toString().charAt(0)));
+					navios.get(i).addPedacoNavioGuerra(
+							new PedacoNavioGuerra(qtCanos.toString().charAt(0)));
 				}else{ //orientacao = H
 					if(navios.get(i).colunas[j] == "10"){
 						col = '0';
 					}else{
 						col = navios.get(i).colunas[j].charAt(0);
 					}
-					navios.get(i).addPedacoNavioGuerra(new PedacoNavioGuerra(qtCanos.toString().charAt(0)));
+					navios.get(i).addPedacoNavioGuerra(
+							new PedacoNavioGuerra(qtCanos.toString().charAt(0)));
 				}	
 			}
 		}

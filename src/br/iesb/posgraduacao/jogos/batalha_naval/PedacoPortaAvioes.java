@@ -9,9 +9,11 @@ public class PedacoPortaAvioes extends PedacoNavio {
 			super.setAtingido(destruir);
 		}else{
 			if(super.isAtingido() && !destruir){
-				throw new Error("Um destroço não pode ser recuperado nesse jogo!");
+				throw new Error("Um destroço não pode ser recuperado nesse "
+						+ "jogo!");
 			}else{
-				throw new Error("Esse pedaço do Porta Aviões já está destruído!");
+				throw new Error("Esse pedaço do Porta Aviões já está "
+						+ "destruído!");
 			}
 		}
 	}

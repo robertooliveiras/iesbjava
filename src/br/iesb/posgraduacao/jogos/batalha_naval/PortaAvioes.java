@@ -21,7 +21,8 @@ public class PortaAvioes extends NavioGuerra {
 	private int direcao;
 	private ArrayList<Integer> eixosValidos = new ArrayList<Integer>();
 	private ArrayList<Integer> direcoesValidas = new ArrayList<Integer>();
-	private ArrayList<PedacoPortaAvioes> pedacosPortaAvioes = new ArrayList<PedacoPortaAvioes>();
+	private ArrayList<PedacoPortaAvioes> pedacosPortaAvioes = 
+			new ArrayList<PedacoPortaAvioes>();
 
 	public PortaAvioes() {
 		eixosValidos.clear();
@@ -52,10 +53,12 @@ public class PortaAvioes extends NavioGuerra {
 		this.direcao = direcao;
 	}
 	
+	@Override
 	public void setPosicaoInicio(char[] posicaoInicio) {
 			super.setPosicaoInicio(posicaoInicio);
 	}
 	
+	@Override
 	public void setPosicaoInicio(int[] posicaoInicio) {
 			super.setPosicaoInicio(posicaoInicio);
 	}
@@ -64,13 +67,9 @@ public class PortaAvioes extends NavioGuerra {
 		return pedacosPortaAvioes;
 	}
 
-	public void setPedacosPortaAvioes(ArrayList<PedacoPortaAvioes> pedacosPortaAvioes) {
-		if(this.getTipo() == 'P'){
+	public void setPedacosPortaAvioes(ArrayList<PedacoPortaAvioes> 
+	                                  pedacosPortaAvioes) {
 			this.pedacosPortaAvioes = pedacosPortaAvioes;
-		}else{
-			//throw new Error("Não é possível adicionar pedaços de Navio de Guerra no Porta Aviões");
-		}
-		
 	}
 
 	public void addPedacoPortaAvioes(PedacoPortaAvioes pedacoPortaAvioes) {

@@ -2,9 +2,8 @@ package br.iesb.posgraduacao.jogos.batalha_naval;
 
 public class PedacoNavioGuerra extends PedacoNavio {
 	private char tipo = ' ';
-	private int id;
 	
-	PedacoNavioGuerra(char t){
+	public PedacoNavioGuerra(char t){
 		setTipo(t);
 	}
 
@@ -16,9 +15,11 @@ public class PedacoNavioGuerra extends PedacoNavio {
 			super.setAtingido(destruir);
 		}else{
 			if(super.isAtingido() && !destruir){
-				throw new Error("Um destroço não pode ser recuperado nesse jogo!");
+				throw new Error("Um destroço não pode ser recuperado nesse "
+						+ "jogo!");
 			}else{
-				throw new Error("Esse pedaço do Navio de Guerra já está destruído!");
+				throw new Error("Esse pedaço do Navio de Guerra já está "
+						+ "destruído!");
 			}
 		}
 	}
@@ -48,19 +49,5 @@ public class PedacoNavioGuerra extends PedacoNavio {
 
 	public void setTipo(char tipo) {
 		this.tipo = tipo;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
 	}
 }
