@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeSet;
 
 public class Colecoes {
@@ -41,26 +42,30 @@ public class Colecoes {
     
     public Colecoes() {
 	/*
-	 * tipo Set para a implementação das coleções
+	 * Collection tipo Set para a implementação das coleções
 	 */
 	Collection<String> c1 = exemploHashSet();
 	Collection<String> c2 = exemploTreeSet(c1);
 	Collection<String> c3 = exemploLinkedHashSet(c2);
 	
 	/*
-	 * tipo List para a implementação das coleções
+	 * Collection tipo List para a implementação das coleções
 	 */
 	ArrayList<String> l1 = exemploArrayList();
 	LinkedList<String> l2 = exemploLinkedList();
 	
 	/*
-	 * tipo Map para  a implementação das coleções
+	 * Collection tipo Map para  a implementação das coleções
 	 */
 	HashMap<String, Livro> hm1 = exemploHashMap();
 	// Acessando um valor através de uma chave
 	Livro livro = hm1.get("Html3");
 	System.out.println(livro.getNome());
 	
+	/*
+	 * List tipo Lista
+	 */
+	exemplo2ArrayList();
 	
     }
     
@@ -238,6 +243,23 @@ public class Colecoes {
 	}
 	System.out.println();
 	return mp;
+    }
+    
+    public void exemplo2ArrayList(){
+	System.out.println("\n==== ArrayList ====");
+	List<String> lista = new ArrayList<String>();
+	lista.add("fogo");
+	lista.add("agua");
+	lista.add("vento");
+	lista.add("terra");
+	for(String i : lista){
+	    System.out.println(i);
+	}
+	Collections.sort(lista);
+	System.out.println("Ordenando a lista:");
+	for(String i : lista){
+	    System.out.println(i);
+	}
     }
 
 }
