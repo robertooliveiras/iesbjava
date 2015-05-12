@@ -21,7 +21,7 @@ public class Agua implements InterfacePeca {
     private char linha;
     private char coluna;
     private String forma = "~~~~|";
-    private ArrayList<String> id;
+    private ArrayList<String> id = new ArrayList<String>();
 
     @Override
 	public boolean isAtingido() {
@@ -85,17 +85,28 @@ public class Agua implements InterfacePeca {
         this.forma = forma;
     }
 
-	@Override
-	public ArrayList<String> getId() {
-		return id;
-	}
+    @Override
+    public ArrayList<String> getId() {
+	return id;
+    }
 
-	public void setId(ArrayList<String> id) {
-		this.id = id;
-	}
+    public void setId(ArrayList<String> id) {
+	this.id.clear();
+	this.id = id;
+    }
 
-	public void addId(String id) {
-		this.id.add(id);
-	}
+    public void addId(String id) {
+	this.id.add(id);
+    }
+
+    @Override
+    public void setLinha(char linha) {
+	this.linha = linha;
+    }
+
+    @Override
+    public void setColuna(char coluna) {
+	this.coluna = coluna;
+    }
 
 }

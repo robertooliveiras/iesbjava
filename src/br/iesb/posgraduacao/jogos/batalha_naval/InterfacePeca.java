@@ -23,8 +23,12 @@ public interface InterfacePeca {
 	public void setVisivel(boolean visivel);
 	public char getLinha();
 	public char getColuna();
+	public void setLinha(char linha);
+	public void setColuna(char coluna);
 	public void setPosicao(char[] posicao);
 	public String getForma();
 	public void setForma(String forma);
 	public ArrayList<String> getId();
+	public void setId(ArrayList<String> id);
+	public void addId(String id);
 }

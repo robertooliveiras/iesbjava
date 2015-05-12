@@ -34,12 +34,14 @@ public class Main {
         		+ "\n2. Para atacar, informe linha+coluna. "
         		+ "ex.: F5;"
         		+ "\n2. Cada jogador fará uma jogada por vez. "
-        		+ "Caso seja informada uma posição já atingida, o jogador"
-        		+ " perderá sua vez;"
-        		+ "\n3. As frotas de ambos os jogadores serão posicionadas "
-        		+ "aleatoriamente pelo computador. A frota é composta das "
-        		+ "seguintes quantidades e tipos de navios: "
-        		+ "\n\t N = Navio de Guerra (sempre na vertical ou horizontal):"
+        		+ "Caso seja informada uma posição já atingida, o "
+        		+ "jogador perderá sua vez;"
+        		+ "\n3. As frotas de ambos os jogadores serão "
+        		+ "posicionadas aleatoriamente pelo computador. A "
+        		+ "frota é composta das seguintes quantidades e tipos"
+        		+ " de navios: "
+        		+ "\n\t N = Navio de Guerra (sempre na vertical ou"
+        		+ " horizontal):"
         		+ "\n\t\t 4 Navios de Guerra de 1 (um) canhão = N1;"
         		+ "\n\t\t 3 Navios de Guerra de 2 (dois) canhões = N2"
         		+ "\n\t\t 2 Navios de Guerra de 3 (tres) canhões = N3"
@@ -49,8 +51,8 @@ public class Main {
         		+ "ou para a direita):"
         		+ "\n\t\t 1 Porta Aviões de 5 (cinco) canhões = P1"
         		+ "\n4. A cada jogada o sistema mostrará o resultado."
-        		+ "\n5. Vencerá aquele que destruir toda a frota do adversário."
-        		+ "\n\n"
+        		+ "\n5. Vencerá aquele que destruir toda a frota do"
+        		+ " adversário.\n\n"
         		+ "QUE O JOGO COMEÇE!!"
         		+ "\n\n");
         
@@ -71,7 +73,7 @@ public class Main {
             jogada(1, cb1, cb2);
             jogada(2, cb2, cb1);
         } while(!this.verificaFrotaDestruida(cb1.getCampoDeBatalha()) 
-        		&& !this.verificaFrotaDestruida(cb2.getCampoDeBatalha()));
+        	&& !this.verificaFrotaDestruida(cb2.getCampoDeBatalha()));
     }
     
     public void jogada(int jogador, CampoBatalha origem, CampoBatalha alvo) {
@@ -126,8 +128,8 @@ public class Main {
                     		+ "DESTRUIU TODA A FROTA DO ADVERSÁRIO!");
                     System.out.println("*****************************");
                     System.out.println("VITÓRIA DO JOGADOR "+jogador+""
-                    		+ "!!!!/n/n");
-                    System.out.println("*****************************");
+                    		+ "!!!!");
+                    System.out.println("*****************************\n\n");
                     System.exit(0);
                 }
             }
@@ -149,8 +151,6 @@ public class Main {
             }
         }
     }
-    
-
     
     public void imprimeTabuleiro(CampoBatalha c1, CampoBatalha c2) {
         System.out.println();
