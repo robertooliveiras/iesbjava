@@ -28,14 +28,15 @@ public class Main {
 
     public static void main(String[] args) {
         Main m = new Main();
+        int qtJogadas = 3;
         System.out.println("BEM VINDOS AO JOGO BATALHA NAVAL!"
         		+ "\n\nVejam as instruções:"
         		+ "\n\n1. Trata-se de um jogo para 2 jogadores; "
         		+ "\n2. Para atacar, informe linha+coluna. "
         		+ "ex.: F5;"
-        		+ "\n2. Cada jogador fará uma jogada por vez. "
+        		+ "\n2. Cada jogador fará "+qtJogadas+" jogada por round. "
         		+ "Caso seja informada uma posição já atingida, o "
-        		+ "jogador perderá sua vez;"
+        		+ "jogador perderá a jogada;"
         		+ "\n3. As frotas de ambos os jogadores serão "
         		+ "posicionadas aleatoriamente pelo computador. A "
         		+ "frota é composta das seguintes quantidades e tipos"
@@ -63,82 +64,87 @@ public class Main {
         m.imprimeTabuleiro(cb1, cb2);
         
         //iniciando o jogo
-        m.jogar(cb1, cb2);
+        m.jogar(cb1, cb2, qtJogadas);
         System.exit(0);
 
     }
 
-    public void jogar(CampoBatalha cb1, CampoBatalha cb2) {
+    public void jogar(CampoBatalha cb1, CampoBatalha cb2, 
+    		int qtJogadasPorRound) {
         do {
-            jogada(1, cb1, cb2);
-            jogada(2, cb2, cb1);
+            jogada(1, cb1, cb2, qtJogadasPorRound);
+            jogada(2, cb2, cb1, qtJogadasPorRound);
         } while(!this.verificaFrotaDestruida(cb1.getCampoDeBatalha()) 
         	&& !this.verificaFrotaDestruida(cb2.getCampoDeBatalha()));
     }
     
-    public void jogada(int jogador, CampoBatalha origem, CampoBatalha alvo) {
-        String input;
+    public void jogada(int jogador, CampoBatalha origem, 
+    		CampoBatalha alvo, int qtJogadasPorRound) {
+        String[] input = new String[qtJogadasPorRound];
         int L;
         int C;
 
         //      Ataque do jogador
         //--------------------------
         System.out.println("\n");
-        System.out.println("Jogador "+jogador+", ataque:");
         
-        
-        input = this.entrada.nextLine();
-        while(this.ataquesValidos.indexOf(input) < 0) {
-            System.out.println("Atenção! Opção inválida.\n"
-                                + "Jogador "+jogador+", ataque:");
-            input = this.entrada.nextLine();
-        }
-
-        L = alvo.getIndexOfLinhasChar(input.toUpperCase().toCharArray()[0]);
-        if (input.toCharArray().length == 2) {
-            C = alvo.getIndexOfColunasChar(input.toUpperCase()
-            		.toCharArray()[1]);
-        } else {
-            C = alvo.getIndexOfColunasChar(input.toUpperCase()
-            		.toCharArray()[2]);
+        //começar looping
+        for (int i = 0; i < input.length; i++) {
+            System.out.println("Jogador "+jogador+", informe seu "
+            					+ (i+1)+"º ataque:");
+	        input[i] = this.entrada.nextLine();
+	        while(this.ataquesValidos.indexOf(input[i]) < 0) {
+	            System.out.println("Atenção! Opção inválida.\n"
+	                                + "Jogador "+jogador+", informe seu "
+	                                + (i+1)+"º ataque:");
+	            input[i] = this.entrada.nextLine();
+	        }
         }
         
-        if(alvo.getCampoDeBatalha()[L][C].getTPeca().isAtingido()) {
-            if (jogador == 1) {
-                this.imprimeTabuleiro(origem, alvo);
-            } else {
-                this.imprimeTabuleiro(alvo, origem);
-            }
-            System.out.println("Jogada ruim!! O Jogador "+jogador+" acertou "
-            		+ "num destroço. perdeu a chance nessa jogada");
+        for (int i = 0; i < input.length; i++) {
+	        L = alvo.getIndexOfLinhasChar(input[i].toUpperCase().toCharArray()[0]);
+	        if (input[i].toCharArray().length == 2) {
+	            C = alvo.getIndexOfColunasChar(input[i].toUpperCase()
+	            		.toCharArray()[1]);
+	        } else {
+	            C = alvo.getIndexOfColunasChar(input[i].toUpperCase()
+	            		.toCharArray()[2]);
+	        }
+	        System.out.println((i+1) + "º ataque: " + input[i].toUpperCase());
+	        if(alvo.getCampoDeBatalha()[L][C].getTPeca().isAtingido()) {
+	            System.out.println((i+1)+"ª Jogada ruim!! O Jogador "
+	            				+jogador+" acertou "
+	            				+ "num destroço. perdeu a chance nessa jogada");
+	        } else {
+	            alvo.getCampoDeBatalha()[L][C].getTPeca().setAtingido(true);
+	            if (alvo.getCampoDeBatalha()[L][C].getTPeca() instanceof Agua) {
+	                System.out.println((i+1)+"ª Jogada deu ÁGUA!!! o Jogador "
+	                					+jogador+" errou!");
+	            } else {
+	                System.out.println((i+1)+"ª Jogada deu TIRO!!! o Jogador "
+	                					+jogador+" acertou um "
+	                					+ "objeto da Frota do adversário!");
+	                if(this.verificaFrotaDestruida(alvo.getCampoDeBatalha())) {
+	                	if (jogador == 1) {
+	                        this.imprimeTabuleiro(origem, alvo);
+	                    } else {
+	                        this.imprimeTabuleiro(alvo, origem);
+	                    }
+	                    System.out.println("\n\nO JOGADOR "+jogador+" "
+	                    		+ "DESTRUIU TODA A FROTA DO ADVERSÁRIO!");
+	                    System.out.println("*****************************");
+	                    System.out.println("VITÓRIA DO JOGADOR "+jogador+""
+	                    		+ "!!!!");
+	                    System.out.println("*****************************\n\n");
+	                    System.exit(0);
+	                }
+	            }
+	        }
+        }
+        if (jogador == 1) {
+            this.imprimeTabuleiro(origem, alvo);
         } else {
-            alvo.getCampoDeBatalha()[L][C].getTPeca().setAtingido(true);
-            if (alvo.getCampoDeBatalha()[L][C].getTPeca() instanceof Agua) {
-                System.out.println("Água!!! o Jogador "+jogador+" errou!");
-            } else {
-                System.out.println("Tiro!!! o Jogador "+jogador+" acertou um "
-                		+ "objeto da Frota do adversário!");
-                if(this.verificaFrotaDestruida(alvo.getCampoDeBatalha())) {
-                	if (jogador == 1) {
-                        this.imprimeTabuleiro(origem, alvo);
-                    } else {
-                        this.imprimeTabuleiro(alvo, origem);
-                    }
-                    System.out.println("\n\nO JOGADOR "+jogador+" "
-                    		+ "DESTRUIU TODA A FROTA DO ADVERSÁRIO!");
-                    System.out.println("*****************************");
-                    System.out.println("VITÓRIA DO JOGADOR "+jogador+""
-                    		+ "!!!!");
-                    System.out.println("*****************************\n\n");
-                    System.exit(0);
-                }
-            }
-            
-            if (jogador == 1) {
-                this.imprimeTabuleiro(origem, alvo);
-            } else {
-                this.imprimeTabuleiro(alvo, origem);
-            }
+            this.imprimeTabuleiro(alvo, origem);
         }
     }
     
