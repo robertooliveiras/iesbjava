@@ -28,7 +28,7 @@ public class Main {
 
     public static void main(String[] args) {
         Main m = new Main();
-        int qtJogadas = 3;
+        int qtJogadas = 6;
         System.out.println("BEM VINDOS AO JOGO BATALHA NAVAL!"
         		+ "\n\nVejam as instruções:"
         		+ "\n\n1. Trata-se de um jogo para 2 jogadores; "
