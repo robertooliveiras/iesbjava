@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class Agua implements InterfacePeca {
     private boolean visivel = true;
     private boolean atingido = false;
+    private boolean destruido = false;
     private char linha;
     private char coluna;
     private String forma = "~~~~|";
@@ -127,6 +128,16 @@ public class Agua implements InterfacePeca {
      */
     public String getName() {
 	return name;
+    }
+
+    @Override
+    public boolean isDestruido() {
+	return false;
+    }
+
+    @Override
+    public void setDestruido(boolean destruido) {
+	// faz nada, agua não pode ser destruida
     }
 
 }

@@ -6,6 +6,7 @@ public abstract class PedacoNavio implements InterfacePeca{
 	private String forma = "~~~~|";
 	protected boolean visivel = false;
 	private boolean atingido = false;
+	private boolean destruido = false;
 	private char linha;
 	private char coluna;
 	private ArrayList<String> description = new ArrayList<String>();
@@ -19,6 +20,14 @@ public abstract class PedacoNavio implements InterfacePeca{
 	@Override
 	public void setAtingido(boolean atingir) {
 		this.atingido = atingir;
+	}
+	
+	public boolean isDestruido() {
+		return destruido;
+	}
+
+	public void setDestruido(boolean destruir) {
+		this.destruido = destruir;
 	}
 
 	@Override

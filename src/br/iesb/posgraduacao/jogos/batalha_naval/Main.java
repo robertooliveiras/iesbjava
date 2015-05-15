@@ -131,6 +131,8 @@ public class Main {
 	                	    + " "
 	                	    + alvo.getCampoDeBatalha()[L][C].getTPeca().getDescription().get(0)
 	                    	    + " da Frota do adversário! ");
+	                    this.destruirNavio(alvo.getCampoDeBatalha()
+	                	    , alvo.getCampoDeBatalha()[L][C].getTPeca().getId());
 			}
 	                if(this.verificaFrotaDestruida(alvo.getCampoDeBatalha())) {
 	                	if (jogador == 1) {
@@ -232,6 +234,20 @@ public class Main {
             }
         }
         return destruido;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public void destruirNavio(Peca[][] p, String id) {
+        for (int i = 0; i < p.length; i++) {
+            for (int j = 0; j < p[i].length; j++) {
+                if(id.equalsIgnoreCase(p[i][j].getTPeca().getId())) {
+                    if(p[i][j].getTPeca().isAtingido()
+                	    && !p[i][j].getTPeca().isDestruido()) {
+                	p[i][j].getTPeca().setDestruido(true);
+                    }
+                }
+            }
+        }
     }
 
 }

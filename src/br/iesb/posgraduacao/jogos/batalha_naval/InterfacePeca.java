@@ -18,7 +18,9 @@ import java.util.ArrayList;
  */
 public interface InterfacePeca {
 	public boolean isAtingido();
+	public boolean isDestruido();
 	public void setAtingido(boolean atingido);
+	public void setDestruido(boolean destruido);
 	public boolean isVisivel();
 	public void setVisivel(boolean visivel);
 	public char getLinha();
