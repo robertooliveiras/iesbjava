@@ -62,17 +62,23 @@ public class CampoBatalha {
     public void posicionarFrota(boolean aleatoriamente) {
 
         if(aleatoriamente) {
-            posicionaPortaAvioesAleatoriamente();
+
+            for (int i = 0; i < 1; i++) {
+        	posicionaPortaAvioesAleatoriamente((i+1));
+            }
             for (int i = 0; i < 4; i++) {
-                posicionaNavioGuerraAleatoriamente(1);
+                posicionaNavioGuerraAleatoriamente(1, (i+1));
             }
             for (int i = 0; i < 3; i++) {
-                posicionaNavioGuerraAleatoriamente(2);
+                posicionaNavioGuerraAleatoriamente(2,(i+1));
             }
             for (int i = 0; i < 2; i++) {
-                posicionaNavioGuerraAleatoriamente(3);
+                posicionaNavioGuerraAleatoriamente(3,(i+1));
             }
-            posicionaNavioGuerraAleatoriamente(4);
+            for (int i = 0; i < 1; i++) {
+        	posicionaNavioGuerraAleatoriamente(4,(i+1));
+            }
+            
         }else{
             posicionamentoManual('P', 5, 1);
             posicionamentoManual('G', 1, 4);
@@ -121,10 +127,10 @@ public class CampoBatalha {
                 }
                 if (tipo == 'P') {
                     posicionamentoManualOk = posicionaPortaAvioesManualmente(
-                    		e, true);
+                    		e, true,(i+1));
                 }else{
                     posicionamentoManualOk = posicionaNavioGuerraManualmente(
-                    		tamanho, e, true);
+                    		tamanho, e, true, (i+1));
                 }
                 
                 tentativas++;
@@ -201,7 +207,7 @@ public class CampoBatalha {
      * 2 navios de guerra com 3 canos (verticais ou horizontais)
      * 1 navio de guerra com 4 canos (verticais ou horizontais)
      */
-    private void posicionaNavioGuerraAleatoriamente(int t) {
+    private void posicionaNavioGuerraAleatoriamente(int t, int id) {
         char[] posicaoInicial = new char[2];
         int[] indexPosicaoInicial = new int[2];
         int eixo; // 0 = horizontal; 1 = vertical
@@ -218,14 +224,15 @@ public class CampoBatalha {
                 posicaoPAok = validaDisponibilidadePosicaoNG(
                 		indexPosicaoInicial, eixo, t, true);
                 if(posicaoPAok) {
-                    posicionaNavioGuerra(indexPosicaoInicial, eixo, t, false);
+                    posicionaNavioGuerra(indexPosicaoInicial, eixo, t, false
+                	    , id);
                 }
             }
         }
     }
 
     private boolean posicionaNavioGuerraManualmente(int t, String posicao
-    		, boolean visibilidade) {
+    		, boolean visibilidade, int id) {
         char[] p = new char[5];
         //ex.: a1 v    ou    j10 h
         p = posicao.toUpperCase().toCharArray();
@@ -255,7 +262,7 @@ public class CampoBatalha {
         		, false)) {
             return false;
         }
-        posicionaNavioGuerra(indexPosicaoInicial, eixo, t, visibilidade);
+        posicionaNavioGuerra(indexPosicaoInicial, eixo, t, visibilidade, id);
         return true;
     }
     
@@ -264,7 +271,7 @@ public class CampoBatalha {
      * 1 porta aviões com 5 canos (em T) (base horizontal virado para direita 
      * ou esquerda; ou vertical e virado para cima ou para baixo)
      */
-    private void posicionaPortaAvioesAleatoriamente() {
+    private void posicionaPortaAvioesAleatoriamente(int id) {
         //posiciona o porta aviões
         char[] posicaoInicial = new char[2];
         int[] indexPosicaoInicial = new int[2];
@@ -287,14 +294,14 @@ public class CampoBatalha {
                 		indexPosicaoInicial, eixo, direcao);
                 if(posicaoPAok) {
                     posicionaPortaAvioes(indexPosicaoInicial
-                    		, eixo, direcao, false);
+                    		, eixo, direcao, false, id);
                 }
             }
         }
     }
     
     private boolean posicionaPortaAvioesManualmente(String posicao
-    		, boolean visibilidade) {
+    		, boolean visibilidade, int id) {
         char[] p = new char[5];
         //ex.: a1 v d    ou    j10 h b
         p = posicao.toUpperCase().toCharArray();
@@ -334,12 +341,13 @@ public class CampoBatalha {
         		, direcao)) {
             return false;
         }
-        posicionaPortaAvioes(indexPosicaoInicial, eixo, direcao, visibilidade);
+        posicionaPortaAvioes(indexPosicaoInicial, eixo, direcao
+        	, visibilidade, id);
         return true;
     }
     
     public void posicionaNavioGuerra(int[] p, int e, Integer t
-    		, boolean visibilidade) {
+    		, boolean visibilidade, int id) {
         PedacoNavioGuerra mpng;
         Peca<PedacoNavioGuerra> png;
         ArrayList<Peca<PedacoNavioGuerra>> pecasNavioGuerra = 
@@ -348,8 +356,9 @@ public class CampoBatalha {
             mpng = new PedacoNavioGuerra(t.toString().charAt(0));
             mpng.setPosicao(getCharValuesByIndex(p));
             mpng.setVisivel(visibilidade);
-            mpng.addId("N"+t);
-            mpng.addId(""+i);
+            mpng.addDescription("N"+t);
+            mpng.addDescription(""+i);
+            mpng.setId("N"+t+""+id);
             png = new Peca<PedacoNavioGuerra>();
             png.setTPeca(mpng);
             pecasNavioGuerra.add(png);
@@ -365,6 +374,7 @@ public class CampoBatalha {
         int c = p[1];
         for (int i = 0; i < pecasNavioGuerra.size(); i++) {
             ng.addPedacoNavioGuerra(pecasNavioGuerra.get(i).getTPeca());
+            ng.setId(pecasNavioGuerra.get(i).getTPeca().getId());
             //horizontal => direçao direita
             if(e == 0) {
             	//posicao inicial
@@ -379,7 +389,7 @@ public class CampoBatalha {
     }
     
     public void posicionaPortaAvioes(int[] p, int e, int d
-    		, boolean visibilidade) {
+    		, boolean visibilidade, int id) {
         PedacoPortaAvioes mppa;
         Peca<PedacoPortaAvioes> ppa;
         ArrayList<Peca<PedacoPortaAvioes>> pecasPortaAvioes = 
@@ -388,8 +398,9 @@ public class CampoBatalha {
             mppa = new PedacoPortaAvioes();
             mppa.setPosicao(getCharValuesByIndex(p));
             mppa.setVisivel(visibilidade);
-            mppa.addId("P1");
-            mppa.addId(""+i);
+            mppa.addDescription("P1");
+            mppa.addDescription(""+i);
+            mppa.setId("P1"+id);
             ppa = new Peca<PedacoPortaAvioes>();
             ppa.setTPeca(mppa);
             pecasPortaAvioes.add(ppa);

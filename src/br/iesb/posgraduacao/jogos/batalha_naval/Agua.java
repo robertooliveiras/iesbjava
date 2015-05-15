@@ -21,7 +21,9 @@ public class Agua implements InterfacePeca {
     private char linha;
     private char coluna;
     private String forma = "~~~~|";
-    private ArrayList<String> id = new ArrayList<String>();
+    private ArrayList<String> description = new ArrayList<String>();
+    private String id;
+    private final String name = "Água";
 
     @Override
 	public boolean isAtingido() {
@@ -86,17 +88,17 @@ public class Agua implements InterfacePeca {
     }
 
     @Override
-    public ArrayList<String> getId() {
-	return id;
+    public ArrayList<String> getDescription() {
+	return description;
     }
 
-    public void setId(ArrayList<String> id) {
-	this.id.clear();
-	this.id = id;
+    public void setDescription(ArrayList<String> description) {
+	this.description.clear();
+	this.description = description;
     }
 
-    public void addId(String id) {
-	this.id.add(id);
+    public void addDescription(String description) {
+	this.description.add(description);
     }
 
     @Override
@@ -107,6 +109,24 @@ public class Agua implements InterfacePeca {
     @Override
     public void setColuna(char coluna) {
 	this.coluna = coluna;
+    }
+
+    @Override
+    public String getId() {
+	// TODO Auto-generated method stub
+	return this.id;
+    }
+
+    @Override
+    public void setId(String id) {
+	this.id = id;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+	return name;
     }
 
 }

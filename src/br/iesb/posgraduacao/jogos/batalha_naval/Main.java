@@ -34,9 +34,9 @@ public class Main {
         		+ "\n\n1. Trata-se de um jogo para 2 jogadores; "
         		+ "\n2. Para atacar, informe linha+coluna. "
         		+ "ex.: F5;"
-        		+ "\n2. Cada jogador fará "+qtJogadas+" jogada por round. "
-        		+ "Caso seja informada uma posição já atingida, o "
-        		+ "jogador perderá a jogada;"
+        		+ "\n2. Cada jogador fará "+qtJogadas+" jogada por "
+        		+ "round. Caso seja informada uma posição já atingida, "
+        		+ "o jogador perderá a jogada;"
         		+ "\n3. As frotas de ambos os jogadores serão "
         		+ "posicionadas aleatoriamente pelo computador. A "
         		+ "frota é composta das seguintes quantidades e tipos"
@@ -113,8 +113,8 @@ public class Main {
 	        System.out.println((i+1) + "º ataque: " + input[i].toUpperCase());
 	        if(alvo.getCampoDeBatalha()[L][C].getTPeca().isAtingido()) {
 	            System.out.println((i+1)+"ª Jogada ruim!! O Jogador "
-	            				+jogador+" acertou "
-	            				+ "num destroço. perdeu a chance nessa jogada");
+	            		+jogador+" acertou "
+	            		+ "num destroço. perdeu a chance nessa jogada");
 	        } else {
 	            alvo.getCampoDeBatalha()[L][C].getTPeca().setAtingido(true);
 	            if (alvo.getCampoDeBatalha()[L][C].getTPeca() instanceof Agua) {
@@ -122,8 +122,16 @@ public class Main {
 	                					+jogador+" errou!");
 	            } else {
 	                System.out.println((i+1)+"ª Jogada deu TIRO!!! o Jogador "
-	                					+jogador+" acertou um "
-	                					+ "objeto da Frota do adversário!");
+	                		+jogador+" acertou um "
+	                		+ "objeto da Frota do adversário! ");
+	                if (this.verificaNavioDestruido(alvo.getCampoDeBatalha()
+	                	, alvo.getCampoDeBatalha()[L][C].getTPeca().getId())) {
+	                    System.out.println((i+1)+"ª Jogada DESTRUIU UM "
+	                	    + alvo.getCampoDeBatalha()[L][C].getTPeca().getName().toUpperCase()
+	                	    + " "
+	                	    + alvo.getCampoDeBatalha()[L][C].getTPeca().getDescription().get(0)
+	                    	    + " da Frota do adversário! ");
+			}
 	                if(this.verificaFrotaDestruida(alvo.getCampoDeBatalha())) {
 	                	if (jogador == 1) {
 	                        this.imprimeTabuleiro(origem, alvo);
@@ -189,11 +197,30 @@ public class Main {
     }
     
     @SuppressWarnings("rawtypes")
-	public boolean verificaFrotaDestruida(Peca[][] p) {
+    public boolean verificaFrotaDestruida(Peca[][] p) {
         boolean destruido = true;
         for (int i = 0; i < p.length; i++) {
             for (int j = 0; j < p[i].length; j++) {
                 if(!(p[i][j].getTPeca() instanceof Agua)) {
+                    if(!p[i][j].getTPeca().isAtingido()) {
+                        destruido = false;
+                        break;
+                    }
+                }
+            }
+            if(!destruido) {
+                break;
+            }
+        }
+        return destruido;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public boolean verificaNavioDestruido(Peca[][] p, String id) {
+        boolean destruido = true;
+        for (int i = 0; i < p.length; i++) {
+            for (int j = 0; j < p[i].length; j++) {
+                if(id.equalsIgnoreCase(p[i][j].getTPeca().getId())) {
                     if(!p[i][j].getTPeca().isAtingido()) {
                         destruido = false;
                         break;

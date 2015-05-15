@@ -1,14 +1,17 @@
 package br.iesb.posgraduacao.jogos.batalha_naval;
 
 public class PedacoPortaAvioes extends PedacoNavio {
+
+	private final String name = "Porta Aviões";
+	
 	@Override
-	public void setAtingido(boolean destruir) {
-		if(!super.isAtingido() && destruir){
+	public void setAtingido(boolean atingir) {
+		if(!super.isAtingido() && atingir){
 			super.setVisivel(true);
-			super.setForma("xP1x|");
-			super.setAtingido(destruir);
+			super.setForma("[P1]|");
+			super.setAtingido(atingir);
 		}else{
-			if(super.isAtingido() && !destruir){
+			if(super.isAtingido() && !atingir){
 				throw new Error("Um destroço não pode ser recuperado nesse "
 						+ "jogo!");
 			}else{
@@ -28,12 +31,20 @@ public class PedacoPortaAvioes extends PedacoNavio {
 		super.visivel = visivel;
 		if (visivel) {
 			if (super.isAtingido()) {
-				super.setForma("xP1x|");
-			}else{
 				super.setForma("[P1]|");
+			}else{
+				super.setForma("~P1~|");
 			}
 		}else{
 			super.setForma("~~~~|");
 		}
 	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+	    return name;
+	}
+
 }

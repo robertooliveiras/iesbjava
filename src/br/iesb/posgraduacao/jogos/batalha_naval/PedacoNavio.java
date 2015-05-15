@@ -8,7 +8,8 @@ public abstract class PedacoNavio implements InterfacePeca{
 	private boolean atingido = false;
 	private char linha;
 	private char coluna;
-	private ArrayList<String> id = new ArrayList<String>();
+	private ArrayList<String> description = new ArrayList<String>();
+	private String id;
 	
 	@Override
 	public boolean isAtingido() {
@@ -16,8 +17,8 @@ public abstract class PedacoNavio implements InterfacePeca{
 	}
 
 	@Override
-	public void setAtingido(boolean destruido) {
-		this.atingido = destruido;
+	public void setAtingido(boolean atingir) {
+		this.atingido = atingir;
 	}
 
 	@Override
@@ -65,19 +66,29 @@ public abstract class PedacoNavio implements InterfacePeca{
 	}
 
 	@Override
-	public ArrayList<String> getId() {
-		return id;
+	public ArrayList<String> getDescription() {
+		return description;
 	}
 
 	@Override
-	public void setId(ArrayList<String> id) {
-	    this.id.clear();
-	    this.id = id;
+	public void setDescription(ArrayList<String> description) {
+	    this.description.clear();
+	    this.description = description;
 	}
 
 	@Override
-	public void addId(String id) {
-		this.id.add(id);
+	public void addDescription(String description) {
+	    this.description.add(description);
+	}
+
+	@Override
+	public String getId() {
+	    return this.id;
+	}
+
+	@Override
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 }

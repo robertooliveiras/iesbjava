@@ -28,6 +28,7 @@ public class Navio {
     public Character[] colunasChar = {'1','2','3','4','5','6','7','8','9','0'};
     private char tipoNavio;
     private ArrayList<Character> tiposValidos = new ArrayList<Character>();
+    private String id;
     
     Navio() {
         tiposValidos.add('G');
@@ -40,6 +41,20 @@ public class Navio {
 
     public void setTipo(char tipo) {
             this.tipoNavio = tipo;
+    }
+
+    /**
+     * @return the id
+     */
+    public String getId() {
+	return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+	this.id = id;
     }
     
 }

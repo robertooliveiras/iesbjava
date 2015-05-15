@@ -28,7 +28,10 @@ public interface InterfacePeca {
 	public void setPosicao(char[] posicao);
 	public String getForma();
 	public void setForma(String forma);
-	public ArrayList<String> getId();
-	public void setId(ArrayList<String> id);
-	public void addId(String id);
+	public ArrayList<String> getDescription();
+	public void setDescription(ArrayList<String> description);
+	public void addDescription(String description);
+	public String getId();
+	public void setId(String id);
+	public String getName();
 }
