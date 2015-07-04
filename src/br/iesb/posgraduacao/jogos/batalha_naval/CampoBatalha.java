@@ -63,20 +63,20 @@ public class CampoBatalha {
 
         if(aleatoriamente) {
 
-            for (int i = 0; i < 1; i++) {
-        	posicionaPortaAvioesAleatoriamente((i+1));
+            for (int i = 1; i <= 1; i++) {
+        	posicionaPortaAvioesAleatoriamente((i));
             }
-            for (int i = 0; i < 4; i++) {
-                posicionaNavioGuerraAleatoriamente(1, (i+1));
+            for (int i = 1; i <= 4; i++) {
+                posicionaNavioGuerraAleatoriamente(1, (i));
             }
-            for (int i = 0; i < 3; i++) {
-                posicionaNavioGuerraAleatoriamente(2,(i+1));
+            for (int i = 1; i <= 3; i++) {
+                posicionaNavioGuerraAleatoriamente(2,(i));
             }
-            for (int i = 0; i < 2; i++) {
-                posicionaNavioGuerraAleatoriamente(3,(i+1));
+            for (int i = 1; i <= 2; i++) {
+                posicionaNavioGuerraAleatoriamente(3,(i));
             }
-            for (int i = 0; i < 1; i++) {
-        	posicionaNavioGuerraAleatoriamente(4,(i+1));
+            for (int i = 1; i <= 1; i++) {
+        	posicionaNavioGuerraAleatoriamente(4,(i));
             }
             
         }else{
