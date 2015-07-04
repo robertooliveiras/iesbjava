@@ -1,6 +1,7 @@
 package br.iesb.posgraduacao.jogos.wumpus;
 
 public class Espaco {
+    private boolean caminho = false;
     private boolean fedorento;
     private boolean brisa;
     private String tipo = "E";
@@ -111,6 +112,20 @@ public class Espaco {
      */
     public boolean isVisible() {
         return visible;
+    }
+
+    /**
+     * @return the caminho
+     */
+    public boolean isCaminho() {
+        return caminho;
+    }
+
+    /**
+     * @param caminho
+     */
+    public void setCaminho(boolean caminho) {
+        this.caminho = caminho;
     }
 
 
