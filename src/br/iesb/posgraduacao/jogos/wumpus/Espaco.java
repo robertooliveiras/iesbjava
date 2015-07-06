@@ -2,51 +2,58 @@ package br.iesb.posgraduacao.jogos.wumpus;
 
 public class Espaco {
     private boolean caminho = false;
-    private boolean fedorento;
-    private boolean brisa;
+    private boolean percorrido = false;
+    private boolean fedorento = false;
+    private boolean brisa = false;
     private String tipo = "E";
-    private String img;
+    private String img = "-----";
     private boolean visible = false;
-
-    public Espaco() {
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-
-    }
 
     /**
      * @param visible the visible to set
      */
     public void setVisible(boolean visible) {
-        if (visible) {
+        String c = "-";
+        if(isPercorrido()) c = "¬";
+        if (visible == true) {
             switch (tipo) {
                 case "O":
-                    img = "ouro ";
+                    img = "ouro"+c;
                 break;
                 case "B":
-                    img = "--B--";
+                    img = c+c +"B"+c+c;
                 break;
                 case "P":
-                    img = "--P--";
-                break;
-                case "E":
-                default:
                     if(isFedorento() && isBrisa()){
-                        img = "-*-≈-";
+                        img = c+"*P≈"+c;
                     } else if (isFedorento()) {
-                        img = "--*--";
+                        img = c+"*P"+c+c;
                     } else if(isBrisa()){
-                        img = "--≈--";
+                        img = c+c+"P≈"+c;
                     } else {
-                        img = "-----";
+                        img = c+c+"P"+c+c;
                     }
                 break;
+                case "W":
+                    img = c+c+"W"+c+c;
+                break;
+                case "E":
+                    if(isFedorento() && isBrisa()){
+                        img = c+"*-≈"+c;
+                    } else if (isFedorento()) {
+                        img = c+c+"*"+c+c;
+                    } else if(isBrisa()){
+                        img = c+c+"≈"+c+c;
+                    } else {
+                        img = c+c+c+c+c;
+                    }
+                break;
+            }
+        }else{
+            if(tipo == "P"){
+                img = c+c+"P"+c+c;
+            }else{
+                img = c+c+c+c+c;
             }
         }
         this.visible = visible;
@@ -126,6 +133,14 @@ public class Espaco {
      */
     public void setCaminho(boolean caminho) {
         this.caminho = caminho;
+    }
+
+    public boolean isPercorrido() {
+        return percorrido;
+    }
+
+    public void setPercorrido(boolean percorrido) {
+        this.percorrido = percorrido;
     }
 
 
