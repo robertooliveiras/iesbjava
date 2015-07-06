@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Tabuleiro {
     
     public Character[] direcoes = {'f','t','s','d'};
-//    public Character[] direcoes = new Character[4];
     public Random rnd = new Random(System.currentTimeMillis());
     private int qtColumns;
     private int tSize;
