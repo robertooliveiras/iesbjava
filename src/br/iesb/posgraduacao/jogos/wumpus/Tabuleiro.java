@@ -40,7 +40,7 @@ public class Tabuleiro {
         do{
             System.out.println("Faça o movimento: ");
             char input = this.entrada.nextLine().charAt(0);
-            if( isValidMove(input)){
+            if( isValidMove(pAtual,input)){
                 qtMovimentos++;
                 pAnterior = pAtual;
                 pAtual = getIdDestino(pAtual, input);
@@ -95,13 +95,21 @@ public class Tabuleiro {
         }
     }
     
-    public boolean isValidMove(char d){
-        // TODO Validar o destino também. aqui está validando apenas o comando digitado
-        for (int i = 0; i < direcoes.length; i++) {
-            if(d == direcoes[i]){
-                return true;
+    public boolean isValidMove(int destin, char direction){
+        if(destin >= 0 && destin < this.tSize && 
+                (!isInLastColumn(destin) || direction != 'f') && 
+                (!isInFirstColumn(destin) || direction != 't')&& 
+                (!isInFirstLine(destin) || direction != 's')&& 
+                (!isInLastLine(destin) || direction != 'd')){
+            for (int i = 0; i < direcoes.length; i++) {
+                if(direction == direcoes[i]){
+                    return true;
+                }
             }
+        } else{
+            return false;
         }
+        
         return false;
     }
     
@@ -142,6 +150,22 @@ public class Tabuleiro {
                 (!isInFirstColumn(o) || d != 't')){
             return true;
         } else{
+            return false;
+        }
+    }
+    
+    public boolean isInFirstLine(int id){
+        if(id < this.qtColumns){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public boolean isInLastLine(int id){
+        if(id > this.tSize - this.qtColumns - 1){
+            return true;
+        }else{
             return false;
         }
     }
