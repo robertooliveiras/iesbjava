@@ -2,29 +2,37 @@ package br.iesb.posgraduacao.android.aula1;
 
 public class OrdenaVetor {
 
-	/**
-	 * @param args
-	 * https://www.youtube.com/watch?v=bWCfxYbG8DQ
-	 * http://www.sbgames.org/papers/sbgames07/short/3.pdf
-	 */
 	public static void main(String[] args) {
 		int[] a = {2,4,1,5,3,7,6,8};
-		int[] ord = new int[8];
-		int m = a.length;
-		int im = 0; 
-		int lm = 0;
+		int j; 
+		int valor;
 		
-		for (int i = 0; i < a.length; i++) {
-			for (int k = lm; k < a.length; k++) {
-				if (m > a[k]) {
-					m = a[k];
-					im = k;
-				}
-			}
-			ord[i] = m;
-			lm++;
-			
-			System.out.print(ord[i]);
+		for(int n = 0; n < a.length; n++){
+		    System.out.format("%8d˚ | ", n + 1);
 		}
+		System.out.println("");
+		for(int n = 0; n < a.length; n++){
+		    System.out.format("%8d  | ", a[n]);
+		}
+		System.out.println("\n\n");
+		
+		for (int i = 1; i < a.length; i++) {
+		    	valor = a[i];
+		    	j = i-1;
+			while (j >= 0 && a[j] > valor) {
+			    a[j+1] = a[j];
+			    j = j-1;
+			}
+			a[j+1] = valor;
+		}
+		
+		for(int n = 0; n < a.length; n++){
+		    System.out.format("%8d˚ | ", n + 1);
+		}
+		System.out.println("");
+		for(int n = 0; n < a.length; n++){
+		    System.out.format("%8d  | ", a[n]);
+		}
+		System.out.println("\n\n");
 	}
 }
